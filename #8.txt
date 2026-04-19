@@ -1,0 +1,238 @@
+Started by user Manisha
+Obtained Jenkinsfile from git https://github.com/ManishaRasu/pet_adoption_platform.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on docker-agent in C:\jenkins-agent\workspace\tailmate-deployment
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+Fetching changes from the remote Git repository
+ > git rev-parse --resolve-git-dir C:\jenkins-agent\workspace\tailmate-deployment\.git # timeout=10
+ > git config remote.origin.url https://github.com/ManishaRasu/pet_adoption_platform.git # timeout=10
+Fetching upstream changes from https://github.com/ManishaRasu/pet_adoption_platform.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.48.1.windows.1'
+ > git fetch --tags --force --progress -- https://github.com/ManishaRasu/pet_adoption_platform.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 26a1033da77910a268706b045f1390b3f519d8f9 (refs/remotes/origin/main)
+Commit message: "updated cleanup"
+ > git rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 26a1033da77910a268706b045f1390b3f519d8f9 # timeout=10
+ > git rev-list --no-walk 95f0eb277c899c99d1900ae62e087bb62ab1b152 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] bat
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 1 hr 0 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+ > git rev-parse --resolve-git-dir C:\jenkins-agent\workspace\tailmate-deployment\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/ManishaRasu/pet_adoption_platform.git # timeout=10
+Fetching upstream changes from https://github.com/ManishaRasu/pet_adoption_platform.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.48.1.windows.1'
+ > git fetch --tags --force --progress -- https://github.com/ManishaRasu/pet_adoption_platform.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 26a1033da77910a268706b045f1390b3f519d8f9 (refs/remotes/origin/main)
+Commit message: "updated cleanup"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Environment Check)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] bat
+ > git rev-parse "refs/remotes/origin/main^{commit}" # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 26a1033da77910a268706b045f1390b3f519d8f9 # timeout=10
+
+C:\jenkins-agent\workspace\tailmate-deployment>docker --version 
+Docker version 29.2.1, build a5c7197
+[Pipeline] bat
+
+C:\jenkins-agent\workspace\tailmate-deployment>docker-compose --version 
+Docker Compose version v5.0.2
+[Pipeline] bat
+
+C:\jenkins-agent\workspace\tailmate-deployment>node --version 
+v22.19.0
+[Pipeline] bat
+
+C:\jenkins-agent\workspace\tailmate-deployment>npm --version 
+11.12.1
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Images)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] bat
+
+C:\jenkins-agent\workspace\tailmate-deployment>docker-compose build 
+ Image tailmate-server Building 
+ Image tailmate-client Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.03kB done
+#1 DONE 0.0s
+
+#2 [server internal] load build definition from Dockerfile.server
+#2 transferring dockerfile: 37B
+#2 transferring dockerfile: 623B 0.0s done
+#2 DONE 0.2s
+
+#3 [client internal] load build definition from Dockerfile.client
+#3 transferring dockerfile: 429B 0.0s done
+#3 DONE 0.1s
+
+#4 [server internal] load metadata for docker.io/library/node:20-alpine
+#4 DONE 1.7s
+
+#5 [client internal] load .dockerignore
+#5 transferring context: 151B 0.0s done
+#5 DONE 0.1s
+
+#6 [server internal] load build context
+#6 ...
+
+#7 [client 1/5] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#7 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#7 DONE 0.1s
+
+#6 [server internal] load build context
+#6 transferring context: 8.49MB 2.3s done
+#6 transferring context: 8.49MB 2.3s done
+#6 DONE 2.4s
+
+#8 [server 3/7] RUN apk add --no-cache curl
+#8 CACHED
+
+#9 [server 4/7] COPY package*.json ./
+#9 CACHED
+
+#10 [server 2/5] WORKDIR /app
+#10 CACHED
+
+#11 [client 3/5] COPY package*.json ./
+#11 CACHED
+
+#12 [server 5/7] RUN npm install && npm cache clean --force
+#12 CACHED
+
+#13 [client 4/5] RUN npm install && npm cache clean --force
+#13 CACHED
+
+#14 [server 6/7] COPY . .
+#14 DONE 0.4s
+
+#15 [client 5/5] COPY . .
+#15 DONE 0.4s
+
+#16 [client] exporting to image
+#16 exporting layers
+#16 ...
+
+#17 [server 7/7] RUN mkdir -p uploads
+#17 DONE 1.1s
+
+#18 [server] exporting to image
+#18 ...
+
+#16 [client] exporting to image
+#16 exporting layers 1.8s done
+#16 exporting manifest sha256:a3389de0afbabdd1ccf23b735a8c6d610a56621c9fa466ae101e276566086ae0 0.0s done
+#16 exporting config sha256:707a61b090439c6849f69a4cc5b8ae727ae78bab2e8ef664743b78c013e75078 0.1s done
+#16 exporting attestation manifest sha256:8a4439f4bab19d78a7135d6d018fd551a9333bd6f5c1b4f104fb9daa7d020cbb 0.1s done
+#16 exporting manifest list sha256:3e0b003828874086b3debefa104398a6d0bc8d33d79cf3da41618b54d10dd19d 0.0s done
+#16 naming to docker.io/library/tailmate-client:latest done
+#16 unpacking to docker.io/library/tailmate-client:latest 0.3s done
+#16 DONE 2.6s
+
+#18 [server] exporting to image
+#18 exporting layers 1.4s done
+#18 exporting manifest sha256:d8f4ab0d22deef71339f7b1d5a8fa74b7c8901758a7948a65d397feae14e3421
+#18 exporting manifest sha256:d8f4ab0d22deef71339f7b1d5a8fa74b7c8901758a7948a65d397feae14e3421 0.1s done
+#18 exporting config sha256:5bb8361c8e8679da37efa91676c42d8820a9668e3ab46a4ed7b2874754d36044
+#18 exporting config sha256:5bb8361c8e8679da37efa91676c42d8820a9668e3ab46a4ed7b2874754d36044 0.2s done
+#18 exporting attestation manifest sha256:1b237a064496d18f92a97bc77b2bdb9ad663039037777d475f14e9dd11ae2e7b 0.1s done
+#18 exporting manifest list sha256:9582b6ed49a6d883bc73a0c2c30f6f09af781092e2efd9ebc8632c02ecf03bf8
+#18 exporting manifest list sha256:9582b6ed49a6d883bc73a0c2c30f6f09af781092e2efd9ebc8632c02ecf03bf8 0.1s done
+#18 naming to docker.io/library/tailmate-server:latest 0.0s done
+#18 unpacking to docker.io/library/tailmate-server:latest
+#18 ...
+
+#19 [client] resolving provenance for metadata file
+#19 DONE 0.1s
+
+#18 [server] exporting to image
+#18 unpacking to docker.io/library/tailmate-server:latest 0.5s done
+#18 DONE 2.7s
+
+#20 [server] resolving provenance for metadata file
+#20 DONE 0.0s
+ Image tailmate-server Built 
+ Image tailmate-client Built 
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Cleanup)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] bat
+
+C:\jenkins-agent\workspace\tailmate-deployment>docker ps -aq --filter name=tailmate   | ForEach-Object { docker rm -f $_ }   || true
+'ForEach-Object' is not recognized as an internal or external command,
+operable program or batch file.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Start Services)
+Stage "Start Services" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Health Checks)
+Stage "Health Checks" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Tests)
+Stage "Run Tests" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Service Status)
+Stage "Service Status" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 255
+Finished: FAILURE
