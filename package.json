@@ -23,8 +23,7 @@
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.7.1",
     "react-scripts": "^0.0.0",
-    "web-vitals": "^2.1.4",
-    "proxy": "http://server-service:5000"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "cross-env CI=false react-scripts start",
