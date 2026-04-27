@@ -14,17 +14,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     
-    services:
-      mongodb:
-        image: mongo:7.0
-        options: >-
-          --health-cmd "echo 'db.runCommand(\"ping\").ok' | mongosh localhost:27017/test --quiet"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 27017:27017
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,89 +29,105 @@ jobs:
 
       - name: Environment Check
         run: |
-          echo "=== Docker Version ==="
+          echo "=== System Information ==="
           docker --version
-          echo "=== Docker Compose Version ==="
-          docker-compose --version
-          echo "=== Node Version ==="
+          docker compose version
           node --version
-          echo "=== NPM Version ==="
           npm --version
+          which docker compose
 
-      - name: Create .env file for docker-compose
+      - name: Create .env file
         run: |
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET || 'your-secret-key' }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET || 'your-secret-key' }}" > .env
           echo "NODE_ENV=development" >> .env
+          cat .env
 
       - name: Build Docker Images
-        run: docker-compose build
+        run: docker compose build --no-cache
+        timeout-minutes: 20
 
       - name: Cleanup previous containers
         if: always()
         run: |
-          docker-compose down --volumes --remove-orphans 2>/dev/null || true
+          docker compose down --volumes --remove-orphans 2>/dev/null || true
           docker system prune -f 2>/dev/null || true
 
       - name: Start Services
         run: |
-          docker-compose up -d
-          echo "Waiting for services to be healthy..."
-          sleep 40
+          echo "Starting services with docker compose..."
+          docker compose up -d
+          echo "Waiting 45 seconds for services to be healthy..."
+          sleep 45
+        timeout-minutes: 5
 
       - name: Service Status
+        if: always()
         run: |
           echo "=== Docker Compose Status ==="
-          docker-compose ps
+          docker compose ps
           echo ""
-          echo "=== Service Logs (Last 50 lines) ==="
-          docker-compose logs --tail=50
+          echo "=== Service Health ==="
+          docker compose exec -T mongodb mongosh --version || echo "MongoDB not ready"
+          echo ""
+          echo "=== Container Logs ==="
+          docker compose logs --tail=50
 
       - name: Health Checks
         run: |
-          echo "=== Checking MongoDB Health ==="
-          docker-compose exec -T mongodb echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet || echo "MongoDB health check done"
-          
           echo "=== Checking Server Health (localhost:5000) ==="
-          for i in {1..10}; do
-            if curl -f http://localhost:5000/health 2>/dev/null; then
-              echo "Server is healthy!"
+          MAX_ATTEMPTS=15
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            if curl -sf http://localhost:5000/health > /dev/null 2>&1; then
+              echo "✓ Server is healthy!"
               break
             fi
-            echo "Attempt $i failed, retrying..."
-            sleep 5
+            echo "Attempt $i/$MAX_ATTEMPTS - Server not ready, waiting..."
+            sleep 3
+            if [ $i -eq $MAX_ATTEMPTS ]; then
+              echo "✗ Server health check failed"
+              docker compose logs server
+              exit 1
+            fi
           done
           
+          echo ""
           echo "=== Checking Client Health (localhost:3000) ==="
-          for i in {1..10}; do
-            if curl -f http://localhost:3000 2>/dev/null; then
-              echo "Client is healthy!"
+          for i in $(seq 1 10); do
+            if curl -sf http://localhost:3000 > /dev/null 2>&1; then
+              echo "✓ Client is healthy!"
               break
             fi
-            echo "Attempt $i failed, retrying..."
-            sleep 5
+            echo "Attempt $i/10 - Client not ready, waiting..."
+            sleep 3
           done
+        continue-on-error: true
+        timeout-minutes: 5
+
+      - name: Install npm dependencies
+        run: npm install
 
       - name: Run Tests
         run: |
           echo "Running npm tests..."
-          npm test -- --watchAll=false --testMatch='**/*.test.js' --coverage 2>&1 || echo "Tests completed (may have warnings)"
+          npm test -- --watchAll=false --testMatch='**/*.test.js' 2>&1 || true
         continue-on-error: true
+        timeout-minutes: 10
 
-      - name: Test Results
+      - name: Final Status and Logs
         if: always()
         run: |
-          echo "=== Final Service Status ==="
-          docker-compose ps
+          echo "=== Final Docker Compose Status ==="
+          docker compose ps || echo "Docker compose unavailable"
           echo ""
-          echo "=== Container Logs ==="
-          docker-compose logs --tail=100
+          echo "=== Service Logs (All) ==="
+          docker compose logs || echo "Could not retrieve logs"
 
-      - name: Cleanup on failure
-        if: failure()
+      - name: Cleanup
+        if: always()
         run: |
-          echo "=== Cleanup after failure ==="
-          docker-compose logs
-          docker-compose down --volumes --remove-orphans
+          echo "Cleaning up resources..."
+          docker compose down --volumes --remove-orphans 2>/dev/null || true
+          docker system prune -f 2>/dev/null || true
 
   code-quality:
     runs-on: ubuntu-latest
@@ -141,9 +146,9 @@ jobs:
         run: npm install
 
       - name: Run ESLint
-        run: npm run lint 2>&1 || echo "ESLint warnings present (not blocking)"
+        run: npm run lint 2>&1 || true
         continue-on-error: true
 
-      - name: Check for security vulnerabilities
-        run: npm audit --audit-level=moderate 2>&1 || echo "Audit completed (review any high severity issues)"
+      - name: Security Audit
+        run: npm audit --audit-level=moderate 2>&1 || true
         continue-on-error: true
