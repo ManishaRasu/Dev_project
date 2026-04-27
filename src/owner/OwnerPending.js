@@ -25,7 +25,7 @@ function OwnerPending() {
         setError('');
         try {
             const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/owner/transactions', {
+            const response = await axios.get('api/owner/transactions', {
                 headers: token ? { Authorization: `Bearer ${token}` } : undefined
             });
             setTransactions(response.data.transactions || []);
@@ -58,7 +58,7 @@ function OwnerPending() {
         try {
             const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/api/transactions/${transaction._id}/confirm`,
+                `http://localhost:5000//api/transactions/${transaction._id}/confirm`,
                 { otp: otpValue },
                 {
                     headers: token ? { Authorization: `Bearer ${token}` } : undefined

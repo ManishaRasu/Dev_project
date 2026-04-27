@@ -65,7 +65,7 @@ A full-stack React application for pet adoption with Express.js backend and Mong
    ```bash
    npm run server
    ```
-   The server will start on http://localhost:5000
+   The server will start on http://localhost:5000/
 
 5. **Start the React development server**
    ```bash
@@ -171,7 +171,7 @@ npm run build
 Create a `.env` file in the root directory:
 ```
 JWT_SECRET=your-super-secret-jwt-key
-MONGODB_URI=mongodb://localhost:27017/tailmate
+MONGODB_URI=mongodb://mongodb-service:27017/tailmate
 PORT=5000
 ```
 

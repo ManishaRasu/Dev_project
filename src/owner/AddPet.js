@@ -76,7 +76,7 @@ function OwnerAddPet() {
         }
       }
 
-      await axios.post('http://localhost:5000/api/owner/pets', fd, {
+      await axios.post('http://localhost:5000//api/owner/pets', fd, {
         headers: { Authorization: `Bearer ${token}` }
       });
       window.alert('Pet listed successfully');

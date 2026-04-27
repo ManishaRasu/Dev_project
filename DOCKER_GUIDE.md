@@ -81,7 +81,7 @@ newgrp docker
 
 ### 2️⃣ Access the Application
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000
+- **Backend API**: http://localhost:5000/
 - **MongoDB**: mongodb://localhost:27017
 
 ### 3️⃣ Stop Services
@@ -137,7 +137,7 @@ newgrp docker
 - **Dockerfile**: Dockerfile.client
 - **Container**: tailmate-client
 - **Port**: 3000
-- **Environment**: API_URL set to `http://localhost:5000`
+- **Environment**: API_URL set to `http://localhost:5000/`
 - **Features**: Hot-reload enabled for development
 
 ---
@@ -491,7 +491,7 @@ server {
     }
 
     location /api/ {
-        proxy_pass http://localhost:5000;
+        proxy_pass http://localhost:5000/;
         proxy_set_header Host $host;
     }
 }

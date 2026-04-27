@@ -34,7 +34,7 @@ function MyPets() {
           }
         }
 
-        const res = await axios.get('http://localhost:5000/api/owner/pets', {
+        const res = await axios.get('api/owner/pets', {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('MyPets - API response:', res.data);
@@ -61,7 +61,7 @@ function MyPets() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/owner/pets', {
+      const res = await axios.get('api/owner/pets', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPets(res.data.pets || []);
@@ -77,7 +77,7 @@ function MyPets() {
 
     try {
       const token = getRoleToken('owner') || localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/owner/pets/${id}`, {
+      await axios.delete(`http://localhost:5000//api/owner/pets/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refresh();
@@ -90,7 +90,7 @@ function MyPets() {
   const handleMarkSold = async (id) => {
     try {
       const token = getRoleToken('owner') || localStorage.getItem('token');
-      await axios.post(`http://localhost:5000/api/owner/pets/${id}/mark-sold`, {}, {
+      await axios.post(`http://localhost:5000//api/owner/pets/${id}/mark-sold`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       refresh();

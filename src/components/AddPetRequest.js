@@ -123,7 +123,7 @@ function AddPetRequest() {
 
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
-      await axios.post('http://localhost:5000/api/pet-requests', formDataToSend, { headers });
+      await axios.post('http://localhost:5000//api/pet-requests', formDataToSend, { headers });
       alert('Pet request sent successfully!');
       setFormData({ name: '', type: '', breed: '', age: '', gender: '', description: '', listingType: 'adoption', price: '' });
       setImageFile(null);

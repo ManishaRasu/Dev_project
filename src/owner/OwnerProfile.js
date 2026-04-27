@@ -19,7 +19,7 @@ function OwnerProfile() {
     }
     const load = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/user/profile');
+        const res = await axios.get('api/user/profile');
         setProfile(res.data.user);
       } catch (e) {
         setError('Failed to load profile');

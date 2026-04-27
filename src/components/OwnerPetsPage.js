@@ -15,7 +15,7 @@ function OwnerPetsPage() {
     const fetchOwnerPets = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`http://localhost:5000/api/owners/${ownerId}/pets`);
+        const { data } = await axios.get(`http://localhost:5000//api/owners/${ownerId}/pets`);
         if (data.success) {
           setOwner(data.owner);
           setPets(data.pets);

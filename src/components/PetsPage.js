@@ -59,7 +59,7 @@ function PetsPage() {
 
   const fetchPets = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/pets');
+      const response = await axios.get('api/pets');
       setPets(response.data);
     } catch (error) {
       setError('Failed to fetch pets');

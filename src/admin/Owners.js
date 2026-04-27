@@ -21,7 +21,7 @@ function Owners() {
     const fetchOwners = async () => {
       try {
         const token = getRoleToken('admin') || localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/admin/owners', {
+        const res = await axios.get('api/admin/owners', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setOwners(res.data.owners || []);
@@ -50,7 +50,7 @@ function Owners() {
 
     try {
       const token = getRoleToken('admin') || localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/owners/${ownerId}`, {
+      await axios.delete(`http://localhost:5000//api/admin/owners/${ownerId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

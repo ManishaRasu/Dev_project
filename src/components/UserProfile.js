@@ -43,8 +43,8 @@ function UserProfile() {
           setLoading(true);
         }
         const [profileRes, transactionsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/user/profile'),
-          axios.get('http://localhost:5000/api/user/transactions')
+          axios.get('api/user/profile'),
+          axios.get('api/user/transactions')
         ]);
         if (isCancelled) return;
         setUserProfile(profileRes.data.user);
@@ -83,7 +83,7 @@ function UserProfile() {
 
   const refreshTransactions = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/transactions');
+      const response = await axios.get('api/user/transactions');
       setTransactions(response?.data?.transactions || []);
     } catch (err) {
       console.error('Failed to refresh transactions', err);
@@ -116,7 +116,7 @@ function UserProfile() {
     setRatingSubmitting(true);
     setToast(null);
     try {
-      await axios.post(`http://localhost:5000/api/transactions/${ratingModal.transactionId}/rate`, {
+      await axios.post(`http://localhost:5000//api/transactions/${ratingModal.transactionId}/rate`, {
         rating: ratingModal.rating
       });
       setToast({ type: 'success', message: 'Thanks for rating! The owner can now confirm the handover.' });

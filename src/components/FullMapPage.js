@@ -49,7 +49,7 @@ export default function FullMapPage() {
     useEffect(() => {
         const fetchPet = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/pets/${id}`);
+                const res = await axios.get(`http://localhost:5000//api/pets/${id}`);
                 setPet(res.data);
             } catch (e) {
                 setError('Failed to load pet');

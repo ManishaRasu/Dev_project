@@ -26,7 +26,7 @@ function OwnerHome() {
   const fetchStats = useCallback(async () => {
     try {
       const token = localStorage.getItem('ownerToken') || localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/owner/pets', {
+      const response = await axios.get('api/owner/pets', {
         headers: token ? { Authorization: `Bearer ${token}` } : undefined
       });
       const pets = response.data.pets || [];

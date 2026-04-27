@@ -26,7 +26,7 @@ function About() {
     const fetchStats = async () => {
       try {
         setStatsLoading(true);
-        const { data } = await axios.get('http://localhost:5000/api/stats');
+        const { data } = await axios.get('api/stats');
         if (!isMounted) return;
         if (data.success) {
           setStats(data.stats);
@@ -41,7 +41,7 @@ function About() {
     const fetchTopOwners = async () => {
       try {
         setOwnersLoading(true);
-        const { data } = await axios.get('http://localhost:5000/api/owners/top-rated?limit=5');
+        const { data } = await axios.get('api/owners/top-rated?limit=5');
         if (!isMounted) return;
         const owners = Array.isArray(data?.owners) ? data.owners : [];
         setTopOwners(

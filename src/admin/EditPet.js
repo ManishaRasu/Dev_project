@@ -42,7 +42,7 @@ function EditPet() {
       const token = localStorage.getItem('token');
       console.log('Fetching pet data - Token:', token ? 'Present' : 'Missing');
 
-      const response = await axios.get(`http://localhost:5000/api/pets/${id}`, {
+      const response = await axios.get(`http://localhost:5000//api/pets/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -198,7 +198,7 @@ function EditPet() {
 
       console.log('Sending update data:', newImageFile ? 'FormData with new image' : requestData);
 
-      const response = await axios.put(`http://localhost:5000/api/pets/${id}`, requestData, {
+      const response = await axios.put(`http://localhost:5000//api/pets/${id}`, requestData, {
         headers: headers
       });
 

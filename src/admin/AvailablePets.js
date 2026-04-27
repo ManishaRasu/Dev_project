@@ -27,7 +27,7 @@ function AvailablePets() {
 	}, [isAuthenticated, isAdmin, navigate]);
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/pets')
+		axios.get('/api/pets')
 			.then(res => {
 				setPets(Array.isArray(res.data) ? res.data.filter(pet => pet.status === 'available' || !pet.status) : []);
 			})

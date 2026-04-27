@@ -25,7 +25,7 @@ const FavoritesPage = () => {
       return;
     }
     try {
-      await axios.post(`http://localhost:5000/api/pets/${petId}/adopt`);
+      await axios.post(`http://localhost:5000//api/pets/${petId}/adopt`);
       // Remove from favorites after successful adoption
       removeFromFavorites(petId);
       alert(`${petName} adopted successfully!`);

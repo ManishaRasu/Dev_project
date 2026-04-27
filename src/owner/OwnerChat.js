@@ -31,7 +31,7 @@ export default function OwnerChat() {
         }
         const fetchPet = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/owner/pets/${id}`);
+                const res = await axios.get(`http://localhost:5000//api/owner/pets/${id}`);
                 if (!res.data?.success) throw new Error('Failed');
                 setPet(res.data.pet);
             } catch (e) {
@@ -47,14 +47,14 @@ export default function OwnerChat() {
 
     const loadMessages = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/pets/${id}/messages`, { params: { userId } });
+            const res = await axios.get(`http://localhost:5000//api/pets/${id}/messages`, { params: { userId } });
             if (res.data?.success) {
                 setMessages(res.data.messages);
                 // Scroll to bottom after messages load
                 setTimeout(scrollToBottom, 100);
             }
             // Mark user messages as read for this thread
-            try { await axios.post(`http://localhost:5000/api/pets/${id}/messages/mark-read`, { userId }); } catch (_) { }
+            try { await axios.post(`http://localhost:5000//api/pets/${id}/messages/mark-read`, { userId }); } catch (_) { }
         } catch (e) {
             // ignore
         } finally {
@@ -76,7 +76,7 @@ export default function OwnerChat() {
         const msg = text.trim();
         if (!msg) return;
         try {
-            const res = await axios.post(`http://localhost:5000/api/pets/${id}/messages`, { text: msg, userId });
+            const res = await axios.post(`http://localhost:5000//api/pets/${id}/messages`, { text: msg, userId });
             if (!res.data?.success) throw new Error(res.data?.message || 'Failed');
             setText('');
             await loadMessages();
@@ -87,7 +87,7 @@ export default function OwnerChat() {
 
     const onClose = async () => {
         if (!window.confirm('Close this chat and clear all messages with this user?')) return;
-        try { await axios.delete(`http://localhost:5000/api/pets/${id}/messages`, { data: { userId } }); } catch (_) { }
+        try { await axios.delete(`http://localhost:5000//api/pets/${id}/messages`, { data: { userId } }); } catch (_) { }
         clearInterval(pollRef.current);
         setMessages([]);
         navigate('/owner/messages');

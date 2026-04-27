@@ -38,7 +38,7 @@ function OwnerEditPet() {
           console.log('[OwnerEditPet] JWT role:', payload.role, 'userId:', payload.userId);
         } catch { /* ignore */ }
 
-        const res = await axios.get(`http://localhost:5000/api/owner/pets/${id}`, {
+        const res = await axios.get(`http://localhost:5000//api/owner/pets/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const p = res.data?.pet;
@@ -135,7 +135,7 @@ function OwnerEditPet() {
           return;
         }
       }
-      await axios.put(`http://localhost:5000/api/owner/pets/${id}`, body, { headers });
+      await axios.put(`http://localhost:5000//api/owner/pets/${id}`, body, { headers });
       window.alert('Updated');
       navigate('/owner/my-pets');
     } catch (err) {

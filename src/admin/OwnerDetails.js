@@ -27,14 +27,14 @@ function OwnerDetails() {
         console.log('OwnerDetails - Owner ID:', id);
 
         // Fetch owner details
-        const ownerRes = await axios.get(`http://localhost:5000/api/admin/owners/${id}`, {
+        const ownerRes = await axios.get(`http://localhost:5000//api/admin/owners/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Owner details response:', ownerRes.data);
         setOwner(ownerRes.data.owner);
 
         // Fetch owner's pets
-        const petsRes = await axios.get(`http://localhost:5000/api/admin/owner/${id}/pets`, {
+        const petsRes = await axios.get(`http://localhost:5000//api/admin/owner/${id}/pets`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Owner pets response:', petsRes.data);

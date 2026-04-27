@@ -70,7 +70,7 @@ PORT=5000
 JWT_SECRET=dev-secret-key-change-in-production
 
 # Client Configuration
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=http://localhost:5000/
 
 # Node Environment
 NODE_ENV=development
@@ -109,7 +109,7 @@ docker-compose ps
 echo ""
 echo "🌐 Application URLs:"
 echo "   Frontend: http://localhost:3000"
-echo "   Backend:  http://localhost:5000"
+echo "   Backend:  http://localhost:5000/"
 echo "   Database: mongodb://localhost:27017"
 
 echo ""

@@ -5,8 +5,8 @@
 ### Local Testing
 - [ ] All services run successfully: `docker-compose up -d`
 - [ ] Frontend accessible at http://localhost:3000
-- [ ] Backend accessible at http://localhost:5000
-- [ ] API health check passes: http://localhost:5000/health
+- [ ] Backend accessible at http://localhost:5000/
+- [ ] API health check passes: http://localhost:5000//health
 - [ ] MongoDB is connected and working
 - [ ] No build errors in console
 - [ ] All environment variables are set correctly
@@ -198,7 +198,7 @@ docker exec -it tailmate-mongodb mongosh
 
 **Check**:
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:5000//health
 docker-compose logs server
 ```
 

@@ -38,7 +38,7 @@ export default function AdoptBuyPage() {
     }
     const fetchPet = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/pets/${id}`);
+        const res = await axios.get(`http://localhost:5000//api/pets/${id}`);
         setPet(res.data);
         setMode(res.data?.listingType === 'sale' ? 'purchase' : 'adoption');
       } catch (err) {
@@ -89,7 +89,7 @@ export default function AdoptBuyPage() {
         }
       }
 
-      await axios.post(`http://localhost:5000/api/pets/${id}/request`, {
+      await axios.post(`http://localhost:5000//api/pets/${id}/request`, {
         type: mode,
         name: name.trim(),
         email: email.trim(),
@@ -100,7 +100,7 @@ export default function AdoptBuyPage() {
         paymentStatus: payStatus,
         paymentRef: payRef
       });
-      const initiateRes = await axios.post(`http://localhost:5000/api/pets/${id}/initiate`, { type: mode });
+      const initiateRes = await axios.post(`http://localhost:5000//api/pets/${id}/initiate`, { type: mode });
       const transactionId = initiateRes?.data?.transactionId;
       const purchaseNotice = mode === 'purchase'
         ? (payStatus === 'succeeded'

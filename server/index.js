@@ -3,7 +3,9 @@
 // Get all pet requests (admin) - populate user info
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+const cors = require('cors')
+
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
@@ -14,7 +16,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 
 // Serve static files from uploads directory
@@ -50,7 +54,7 @@ const upload = multer({
 });
 
 // Use database name 'petad'
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/petad';
+const mongoURI = process.env.MONGO_URI || 'mongodb://mongodb-service:27017/petad';
 mongoose.connect(mongoURI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -217,7 +221,7 @@ app.post('/api/pet-requests', authenticateToken, upload.single('image'), async (
     return res.status(400).json({ success: false, message: 'Invalid latitude or longitude range' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `http://localhost:5000//uploads/${req.file.filename}`;
     const petRequest = new PetRequest({
       name,
       type,
@@ -500,7 +504,7 @@ app.post('/api/pets', authenticateToken, upload.single('image'), async (req, res
     return res.status(400).json({ success: false, message: 'Image file is required' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `http://localhost:5000//uploads/${req.file.filename}`;
     const pet = new Pet({
       name,
       type,
@@ -556,7 +560,7 @@ app.put('/api/pets/:id', authenticateToken, upload.single('image'), async (req, 
 
     // If a new image file is uploaded, update the image URL
     if (req.file) {
-      updateData.image = `http://localhost:5000/uploads/${req.file.filename}`;
+      updateData.image = `http://localhost:5000//uploads/${req.file.filename}`;
     }
 
     // If status is changed to available, clear the adoptedBy and adoptedAt fields
@@ -1084,7 +1088,7 @@ app.post('/api/owner/pets', authenticateToken, upload.single('image'), async (re
     return res.status(400).json({ success: false, message: 'Image file is required' });
   }
   try {
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const imageUrl = `http://localhost:5000//uploads/${req.file.filename}`;
     const pet = new Pet({
       name, type, breed, age: parseInt(age), gender, description, image: imageUrl,
       location: (lat && lng) ? { lat: Number(lat), lng: Number(lng) } : undefined,
@@ -1128,7 +1132,7 @@ app.put('/api/owner/pets/:id', authenticateToken, upload.single('image'), async 
     }
 
     if (req.file) {
-      pet.image = `http://localhost:5000/uploads/${req.file.filename}`;
+      pet.image = `http://localhost:5000//uploads/${req.file.filename}`;
     }
     if (pet.status === 'available') {
       pet.adoptedBy = null;

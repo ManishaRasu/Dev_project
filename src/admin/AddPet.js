@@ -127,7 +127,7 @@ function AddPet() {
         imageFile: imageFile ? imageFile.name : 'No file'
       });
 
-      await axios.post('http://localhost:5000/api/pets', formDataToSend, {
+      await axios.post('http://localhost:5000//api/pets', formDataToSend, {
         headers: {
           'Authorization': `Bearer ${token}`
           // Don't set Content-Type, let axios set it automatically for FormData

@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/api/user/profile');
+          const response = await axios.get('api/user/profile');
           setUser(response.data.user);
         } catch (error) {
           console.error('Auth check failed:', error);
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
       const endpoint = isAdmin ? '/api/admin-login' : '/api/user-login';
       const data = isAdmin ? { adminId: email, password } : { email, password };
       
-      const response = await axios.post(`http://localhost:5000${endpoint}`, data);
+      const response = await axios.post(`http://localhost:5000/${endpoint}`, data);
       
       const { token: newToken, user: userData } = response.data;
       
@@ -110,7 +110,7 @@ export const AuthProvider = ({ children }) => {
   };
   const loginOwner = async (idOrEmail, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/owner-login', {
+      const response = await axios.post('http://localhost:5000//api/owner-login', {
         ownerId: idOrEmail,
         password
       });
@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/signup', userData);
+      const response = await axios.post('http://localhost:5000//api/signup', userData);
       
       const { token: newToken, user: newUser } = response.data;
       

@@ -61,7 +61,7 @@ stage('Start Services') {
             steps {
                 script {
                     bat 'docker-compose ps'
-                    bat 'curl -f http://localhost:5000/health || exit 1'
+                    bat 'curl -f http://localhost:5000//health || exit 1'
                     bat 'curl -f http://localhost:3000 || exit 1'
                 }
             }

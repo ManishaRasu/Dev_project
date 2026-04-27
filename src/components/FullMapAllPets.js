@@ -47,7 +47,7 @@ export default function FullMapAllPets() {
     useEffect(() => {
         const fetchPets = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/pets');
+                const res = await axios.get('api/pets');
                 setPets(res.data || []);
             } catch (err) {
                 console.error('Failed to fetch pets', err.message || err);

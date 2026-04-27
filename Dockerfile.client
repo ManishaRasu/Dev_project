@@ -16,6 +16,6 @@ EXPOSE 3000
 ENV PORT=3000
 ENV CI=false
 ENV CHOKIDAR_USEPOLLING=true
-ENV REACT_APP_API_URL=http://localhost:5000
+ENV REACT_APP_API_URL=http://server-service:5000
 
 CMD ["npm", "start"]

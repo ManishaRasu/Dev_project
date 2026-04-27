@@ -27,7 +27,7 @@ function AdoptedPets() {
 
 	const fetchPets = async () => {
 		try {
-			const response = await axios.get('http://localhost:5000/api/pets');
+			const response = await axios.get('api/pets');
 			// Include both adopted and sold for this consolidated view
 			setPets(response.data.filter(pet => pet.status === 'adopted' || pet.status === 'sold'));
 		} catch (error) {

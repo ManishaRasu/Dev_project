@@ -21,7 +21,7 @@ export default function OwnerConversations() {
         let cancelled = false;
         const load = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/owner/conversations');
+                const res = await axios.get('api/owner/conversations');
                 if (!cancelled && res.data?.success) setItems(res.data.conversations);
             } catch (e) {
                 if (!cancelled) setError(e.response?.data?.message || 'Failed to load');

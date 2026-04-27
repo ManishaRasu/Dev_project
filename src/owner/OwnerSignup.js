@@ -19,7 +19,7 @@ function OwnerSignup() {
     setLoading(true);
     
     try {
-      const response = await axios.post('http://localhost:5000/api/owner-signup', form);
+      const response = await axios.post('http://localhost:5000//api/owner-signup', form);
       
       if (response.data.success) {
         setSuccess(response.data.message || 'Owner account created successfully!');

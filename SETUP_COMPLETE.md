@@ -87,7 +87,7 @@ chmod +x quickstart.sh
 
 **Access URLs:**
 - Frontend: http://localhost:3000
-- Backend: http://localhost:5000  
+- Backend: http://localhost:5000/  
 - Database: mongodb://localhost:27017
 
 ---
@@ -145,7 +145,7 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 - [ ] `.env.docker` file exists
 - [ ] All 3 containers running: `docker-compose ps`
 - [ ] Frontend loads: http://localhost:3000
-- [ ] Backend responds: http://localhost:5000/health
+- [ ] Backend responds: http://localhost:5000//health
 - [ ] MongoDB logs show "Connection string" message
 - [ ] No error messages in logs
 
