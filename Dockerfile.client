@@ -1,22 +1,31 @@
-# FROM node:20-alpine
+FROM node:20-alpine
 
-# WORKDIR /app
+WORKDIR /app
 
-# # Copy package files first (for better layer caching)
-# COPY package*.json ./
+# Copy package files first (for better layer caching)
+COPY package*.json ./
 
-# # Install dependencies (including dev for building React)
-# RUN npm install && npm cache clean --force
+# Install dependencies (including dev for building React)
+RUN npm install && npm cache clean --force
 
-# # Copy application code
-# COPY . .
+# Copy application code
+COPY . .
 
-# EXPOSE 3000
+# Build the React app
+RUN npm run build
 
-# ENV PORT=3000
-# ENV CI=false
-# ENV CHOKIDAR_USEPOLLING=true
-# ENV REACT_APP_API_URL=http://server-service:5000
+# Install serve for production
+RUN npm install -g serve
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV CI=false
+ENV CHOKIDAR_USEPOLLING=true
+ENV REACT_APP_API_URL=http://localhost:5000/
+
+# Serve the built app
+CMD ["serve", "-s", "build", "-l", "3000"]
 
 # CMD ["npm", "start"]
 FROM node:20-alpine

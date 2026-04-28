@@ -1,0 +1,458 @@
+Started by user Manisha
+Obtained Jenkinsfile from git https://github.com/ManishaRasu/Dev_project/
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/start_project
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/start_project/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/ManishaRasu/Dev_project/ # timeout=10
+Fetching upstream changes from https://github.com/ManishaRasu/Dev_project/
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/ManishaRasu/Dev_project/ +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5a27c0d2ed340944a86056f3dc6027a728c847f7 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5a27c0d2ed340944a86056f3dc6027a728c847f7 # timeout=10
+Commit message: "fix: updated server/Dockerfile"
+ > git rev-list --no-walk 0fd8c7f349f3ba639ace056a6f954dba75c9f4ad # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 30 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clean Workspace)
+[Pipeline] deleteDir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/ManishaRasu/Dev_project/
+ > git init /var/jenkins_home/workspace/start_project # timeout=10
+Fetching upstream changes from https://github.com/ManishaRasu/Dev_project/
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/ManishaRasu/Dev_project/ +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/ManishaRasu/Dev_project/ # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 5a27c0d2ed340944a86056f3dc6027a728c847f7 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5a27c0d2ed340944a86056f3dc6027a728c847f7 # timeout=10
+Commit message: "fix: updated server/Dockerfile"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Environment Check)
+[Pipeline] sh
++ docker --version
+Docker version 29.4.1, build 055a478
+[Pipeline] sh
++ docker compose version
+Docker Compose version v5.1.3
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Force Cleanup)
+[Pipeline] sh
++ docker rm -f tailmate-mongodb tailmate-server tailmate-client
+Error response from daemon: No such container: tailmate-mongodb
+Error response from daemon: No such container: tailmate-server
+Error response from daemon: No such container: tailmate-client
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Stop Old Containers)
+[Pipeline] sh
++ docker compose down --remove-orphans
+ Container start_project-client-1 Stopping 
+ Container start_project-client-1 Stopped 
+ Container start_project-client-1 Removing 
+ Container start_project-client-1 Removed 
+ Container start_project-server-1 Stopping 
+ Container start_project-server-1 Stopped 
+ Container start_project-server-1 Removing 
+ Container start_project-server-1 Removed 
+ Container start_project-mongodb-1 Stopping 
+ Container start_project-mongodb-1 Stopped 
+ Container start_project-mongodb-1 Removing 
+ Container start_project-mongodb-1 Removed 
+ Network start_project_tailmate-network Removing 
+ Network start_project_tailmate-network Removed 
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build & Start Services)
+[Pipeline] sh
++ docker compose up --build -d
+ Image start_project-server Building 
+ Image start_project-client Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.03kB done
+#1 DONE 0.0s
+
+#2 [server internal] load build definition from Dockerfile
+#2 transferring dockerfile: 406B 0.0s done
+#2 DONE 0.1s
+
+#3 [client internal] load build definition from Dockerfile.client
+#3 transferring dockerfile: 1.00kB 0.0s done
+#3 DONE 0.1s
+
+#4 [client internal] load metadata for docker.io/library/node:20-alpine
+#4 DONE 1.7s
+
+#5 [server internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [client internal] load .dockerignore
+#6 transferring context: 151B 0.0s done
+#6 DONE 0.0s
+
+#7 [server internal] load build context
+#7 DONE 0.0s
+
+#8 [client internal] load build context
+#8 DONE 0.0s
+
+#9 [client 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+#9 DONE 0.1s
+
+#7 [server internal] load build context
+#7 transferring context: 7.05MB 1.5s done
+#7 DONE 1.6s
+
+#10 [server 3/7] RUN apk add --no-cache curl
+#10 CACHED
+
+#11 [server 4/7] COPY package*.json ./
+#11 CACHED
+
+#12 [server 2/7] WORKDIR /app
+#12 CACHED
+
+#13 [server 5/7] RUN npm install && npm cache clean --force
+#13 CACHED
+
+#8 [client internal] load build context
+#8 transferring context: 7.99MB 1.6s done
+#8 DONE 1.6s
+
+#14 [server 6/7] COPY . .
+#14 ...
+
+#12 [client 2/7] WORKDIR /app
+#12 CACHED
+
+#15 [client 3/6] COPY package*.json ./
+#15 CACHED
+
+#16 [client 4/6] RUN npm install && npm cache clean --force
+#16 CACHED
+
+#14 [server 6/7] COPY . .
+#14 DONE 0.2s
+
+#17 [client 5/6] COPY . .
+#17 DONE 0.2s
+
+#18 [client 6/6] RUN npm run build
+#18 ...
+
+#19 [server 7/7] RUN mkdir -p uploads
+#19 DONE 0.5s
+
+#20 [server] exporting to image
+#20 exporting layers
+#20 exporting layers 0.7s done
+#20 exporting manifest sha256:5bb4ed54f6c5d769370b03d6b728747e733ce06dbc9228f5e29c04677223dd10 0.0s done
+#20 exporting config sha256:80952ccb95b1c237f57fa7c516f8a9d54538eff1d7b08da8bfee8c8bf80586e7 0.0s done
+#20 exporting attestation manifest sha256:2395d3888e10a4f827798b5c2d3c38bdc12bdec79e1c76e0b3634b5b96d1aa18
+#20 exporting attestation manifest sha256:2395d3888e10a4f827798b5c2d3c38bdc12bdec79e1c76e0b3634b5b96d1aa18 0.1s done
+#20 exporting manifest list sha256:8b7699d02b74b003ad26e964de432a5a2d510487ce19f9f9ed0aa3bb5d65dd2c 0.0s done
+#20 naming to docker.io/library/start_project-server:latest done
+#20 unpacking to docker.io/library/start_project-server:latest
+#20 unpacking to docker.io/library/start_project-server:latest 0.2s done
+#20 DONE 1.2s
+
+#18 [client 6/6] RUN npm run build
+#18 0.960 
+#18 0.960 > tailmate@0.1.0 build
+#18 0.960 > react-scripts build
+#18 0.960 
+#18 ...
+
+#21 [server] resolving provenance for metadata file
+#21 DONE 0.1s
+
+#18 [client 6/6] RUN npm run build
+#18 4.047 Creating an optimized production build...
+#18 41.86 Compiled successfully.
+#18 41.86 
+#18 41.86 File sizes after gzip:
+#18 41.86 
+#18 41.94   173.35 kB  build/static/js/main.81b458be.js
+#18 41.94   71.38 kB   build/static/js/181.88a82307.chunk.js
+#18 41.94   36.93 kB   build/static/css/main.86de31b7.css
+#18 41.94 
+#18 41.94 The project was built assuming it is hosted at /.
+#18 41.94 You can control this with the homepage field in your package.json.
+#18 41.94 
+#18 41.94 The build folder is ready to be deployed.
+#18 41.94 You may serve it with a static server:
+#18 41.94 
+#18 41.94   npm install -g serve
+#18 41.94   serve -s build
+#18 41.94 
+#18 41.94 Find out more about deployment here:
+#18 41.95 
+#18 41.95   https://cra.link/deployment
+#18 41.95 
+#18 DONE 42.3s
+
+#22 [client] exporting to image
+#22 exporting layers
+#22 exporting layers 0.9s done
+#22 exporting manifest sha256:23b0e1ffcd04bc4c74752513b437f26598eee22e1a73d63d030fc1a4169964c1 0.0s done
+#22 exporting config sha256:b90cc460296aa56113da4acb97108c8aa0c2ff95ccfaf1fd526d36c79799a529 0.0s done
+#22 exporting attestation manifest sha256:ea4cd916b3a4bb2ff2daeca21740b96db83581825d9a8e05c5b99f2ac4b8e1a5 0.1s done
+#22 exporting manifest list sha256:a9b72e0b4e58bccd162c541de0b1678c7c552033315a91076003d9d19ccc0815
+#22 exporting manifest list sha256:a9b72e0b4e58bccd162c541de0b1678c7c552033315a91076003d9d19ccc0815 0.0s done
+#22 naming to docker.io/library/start_project-client:latest done
+#22 unpacking to docker.io/library/start_project-client:latest
+#22 unpacking to docker.io/library/start_project-client:latest 0.4s done
+#22 DONE 1.6s
+
+#23 [client] resolving provenance for metadata file
+#23 DONE 0.0s
+ Image start_project-server Built 
+ Image start_project-client Built 
+ Network start_project_tailmate-network Creating 
+ Network start_project_tailmate-network Created 
+ Container start_project-mongodb-1 Creating 
+ Container start_project-mongodb-1 Created 
+ Container start_project-server-1 Creating 
+ Container start_project-server-1 Created 
+ Container start_project-client-1 Creating 
+ Container start_project-client-1 Created 
+ Container start_project-mongodb-1 Starting 
+ Container start_project-mongodb-1 Started 
+ Container start_project-mongodb-1 Waiting 
+ Container start_project-mongodb-1 Healthy 
+ Container start_project-server-1 Starting 
+ Container start_project-server-1 Started 
+ Container start_project-client-1 Starting 
+ Container start_project-client-1 Started 
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Wait for Services)
+[Pipeline] sleep
+Sleeping for 30 sec
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Health Check)
+[Pipeline] sh
++ docker compose exec -T server curl -f http://localhost:5000/health
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0100    58 100    58   0     0 12877     0  --:--:-- --:--:-- --:--:-- 14500
+{"status":"UP","message":"Server and MongoDB are healthy"}+ break
+[Pipeline] sh
++ docker compose exec -T client curl -f http://localhost:3000
+Error response from daemon: Container f702860e4fa2333d23b9d0c0e821f251524d22fe47044df45c961b8d5ea96f28 is restarting, wait until the container is running
++ exit 1
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Show Logs)
+Stage "Show Logs" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ docker compose logs --tail=100
+server-1   | Server running on port 5000
+server-1   | Connected to MongoDB
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.562+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":2117}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.562+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.586+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.591+00:00"},"s":"I",  "c":"NETWORK",  "id":4915702, "ctx":"initandlisten","msg":"Updated wire specification","attr":{"oldSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":21},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":21},"outgoing":{"minWireVersion":6,"maxWireVersion":21},"isInternalClient":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":21},"incomingInternalClient":{"minWireVersion":21,"maxWireVersion":21},"outgoing":{"minWireVersion":21,"maxWireVersion":21},"isInternalClient":true}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.591+00:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"7.0","context":"startup"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.591+00:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.603+00:00"},"s":"I",  "c":"CONTROL",  "id":6608200, "ctx":"initandlisten","msg":"Initializing cluster server parameters from disk"}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.603+00:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.604+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.617+00:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.618+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.623+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.623+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.623+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:00.623+00:00"},"s":"I",  "c":"CONTROL",  "id":8423403, "ctx":"initandlisten","msg":"mongod startup complete","attr":{"Summary of time elapsed":{"Startup from clean shutdown?":true,"Statistics":{"Transport layer setup":"0 ms","Run initial syncer crash recovery":"0 ms","Create storage engine lock file in the data directory":"0 ms","Get metadata describing storage engine":"0 ms","Validate options in metadata against current startup options":"0 ms","Create storage engine":"2129 ms","Write current PID to file":"10 ms","Initialize FCV before rebuilding indexes":"5 ms","Drop abandoned idents and get back indexes that need to be rebuilt or builds that need to be restarted":"0 ms","Rebuild indexes for collections":"0 ms","Load cluster parameters from disk for a standalone":"0 ms","Build user and roles graph":"0 ms","Set up the background thread pool responsible for waiting for opTimes to be majority committed":"0 ms","Initialize information needed to make a mongod instance shard aware":"1 ms","Start up the replication coordinator":"3 ms","Start transport layer":"1 ms","_initAndListen total elapsed time":"2184 ms"}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.412+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:42640","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"b06a59e9-0916-4fd8-a346-a8a62b4e27d9"}},"connectionId":1,"connectionCount":1}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.420+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn1","msg":"client metadata","attr":{"remote":"127.0.0.1:42640","client":"conn1","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.420+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn1","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:42640","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.429+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:42646","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"c6a52ac0-93ae-4a8a-a029-2fdce5bed1b8"}},"connectionId":2,"connectionCount":2}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.432+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn2","msg":"client metadata","attr":{"remote":"127.0.0.1:42646","client":"conn2","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.432+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn2","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:42646","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.459+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn2","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":27}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.758+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:42654","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"de60cb48-3024-4469-b42d-0a24f806011c"}},"connectionId":3,"connectionCount":3}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.759+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:42658","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"d8c98a12-480d-4242-8d37-69974bd4b119"}},"connectionId":4,"connectionCount":4}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.769+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn3","msg":"client metadata","attr":{"remote":"127.0.0.1:42654","client":"conn3","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.769+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn3","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:42654","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.772+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn4","msg":"client metadata","attr":{"remote":"127.0.0.1:42658","client":"conn4","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.773+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn4","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:42658","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:09.789+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn4","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":17}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:10.122+00:00"},"s":"I",  "c":"-",        "id":20883,   "ctx":"conn1","msg":"Interrupted operation as its client disconnected","attr":{"opId":133}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:10.123+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn1","msg":"Connection ended","attr":{"remote":"127.0.0.1:42640","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"b06a59e9-0916-4fd8-a346-a8a62b4e27d9"}},"connectionId":1,"connectionCount":3}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:10.123+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn4","msg":"Connection ended","attr":{"remote":"127.0.0.1:42658","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"d8c98a12-480d-4242-8d37-69974bd4b119"}},"connectionId":4,"connectionCount":2}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:10.123+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn3","msg":"Connection ended","attr":{"remote":"127.0.0.1:42654","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"de60cb48-3024-4469-b42d-0a24f806011c"}},"connectionId":3,"connectionCount":1}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:10.123+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn2","msg":"Connection ended","attr":{"remote":"127.0.0.1:42646","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"c6a52ac0-93ae-4a8a-a029-2fdce5bed1b8"}},"connectionId":2,"connectionCount":0}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:11.974+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41848","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"25ff2456-7c4d-4580-8da8-54e78febe37a"}},"connectionId":5,"connectionCount":1}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:11.979+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn5","msg":"client metadata","attr":{"remote":"172.20.0.3:41848","client":"conn5","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:11.979+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn5","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41848","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.004+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41860","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"210a5999-2afb-4eb9-bfaa-340e0276341e"}},"connectionId":6,"connectionCount":2}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.005+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41868","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"1e7bb7ac-b6e8-40ef-baaf-f7f8fc48ddec"}},"connectionId":7,"connectionCount":3}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.007+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn6","msg":"client metadata","attr":{"remote":"172.20.0.3:41860","client":"conn6","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.007+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn6","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41860","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.008+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn7","msg":"client metadata","attr":{"remote":"172.20.0.3:41868","client":"conn7","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.009+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn7","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41868","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.014+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn6","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":6}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.019+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn7","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.021+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41882","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"23da7b09-6e85-4b9a-bf17-fdc875f6013f"}},"connectionId":8,"connectionCount":4}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.022+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn8","msg":"client metadata","attr":{"remote":"172.20.0.3:41882","client":"conn8","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.022+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn8","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41882","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.025+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn8","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":3}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.027+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41886","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"0c7d24dd-ee4c-4393-8eb7-3ec85b59b349"}},"connectionId":9,"connectionCount":5}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.037+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn9","msg":"client metadata","attr":{"remote":"172.20.0.3:41886","client":"conn9","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.037+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn9","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41886","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.040+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41902","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"822520a2-4259-449e-b8b8-98c11bb82cc7"}},"connectionId":10,"connectionCount":6}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.058+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn9","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":20}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.060+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn10","msg":"client metadata","attr":{"remote":"172.20.0.3:41902","client":"conn10","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.060+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn10","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41902","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.069+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:41918","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"d45d8f3e-8987-4ca3-aa51-a35e9a3b33eb"}},"connectionId":11,"connectionCount":7}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.072+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn10","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.074+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn11","msg":"client metadata","attr":{"remote":"172.20.0.3:41918","client":"conn11","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.074+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn11","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:41918","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:12.078+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn11","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":3}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.049+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:52746","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"46dd2aa4-7c59-433c-b486-0458b8d83c3c"}},"connectionId":12,"connectionCount":8}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.055+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn12","msg":"client metadata","attr":{"remote":"127.0.0.1:52746","client":"conn12","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.055+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn12","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:52746","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.070+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:52750","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"113542af-9f37-4dfd-9ba0-64821cbd5de6"}},"connectionId":13,"connectionCount":9}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.074+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn13","msg":"client metadata","attr":{"remote":"127.0.0.1:52750","client":"conn13","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.074+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn13","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:52750","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.122+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn13","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":47}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.262+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:52760","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"5a771a34-c75c-43d1-9863-9389cbd52a6e"}},"connectionId":14,"connectionCount":10}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.263+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:52770","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"6940a35a-04ee-4901-9a3a-e8678f1de1a4"}},"connectionId":15,"connectionCount":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.273+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn14","msg":"client metadata","attr":{"remote":"127.0.0.1:52760","client":"conn14","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.273+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn14","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:52760","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.275+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn15","msg":"client metadata","attr":{"remote":"127.0.0.1:52770","client":"conn15","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.275+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn15","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:52770","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.286+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn15","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.544+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn12","msg":"Connection ended","attr":{"remote":"127.0.0.1:52746","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"46dd2aa4-7c59-433c-b486-0458b8d83c3c"}},"connectionId":12,"connectionCount":10}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.545+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn15","msg":"Connection ended","attr":{"remote":"127.0.0.1:52770","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"6940a35a-04ee-4901-9a3a-e8678f1de1a4"}},"connectionId":15,"connectionCount":9}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.546+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn14","msg":"Connection ended","attr":{"remote":"127.0.0.1:52760","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"5a771a34-c75c-43d1-9863-9389cbd52a6e"}},"connectionId":14,"connectionCount":8}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:21.547+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn13","msg":"Connection ended","attr":{"remote":"127.0.0.1:52750","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"113542af-9f37-4dfd-9ba0-64821cbd5de6"}},"connectionId":13,"connectionCount":7}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:22.489+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"172.20.0.3:48406","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"182cf05b-1d5c-4112-81cf-9a8eaae78a69"}},"connectionId":16,"connectionCount":8}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:22.491+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn16","msg":"client metadata","attr":{"remote":"172.20.0.3:48406","client":"conn16","negotiatedCompressors":[],"doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:22.491+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn16","msg":"Connection not authenticating","attr":{"client":"172.20.0.3:48406","doc":{"driver":{"name":"nodejs|Mongoose","version":"6.20.0|8.23.1"},"platform":"Node.js v20.20.2, LE","os":{"name":"linux","architecture":"x64","version":"6.6.87.2-microsoft-standard-WSL2","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.413+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:34306","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"1ecfa07a-5a35-43a1-a004-a3f0efb071a1"}},"connectionId":17,"connectionCount":9}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.418+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn17","msg":"client metadata","attr":{"remote":"127.0.0.1:34306","client":"conn17","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.418+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn17","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:34306","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.427+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:34318","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"eb76743e-74ed-4bab-ae41-edac885323f1"}},"connectionId":18,"connectionCount":10}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.428+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn18","msg":"client metadata","attr":{"remote":"127.0.0.1:34318","client":"conn18","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.428+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn18","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:34318","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.446+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn18","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":18}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.566+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:34328","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"19e15832-f5c7-47d9-ab25-fe0b247e10d9"}},"connectionId":19,"connectionCount":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.567+00:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:34330","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"140744e0-e56e-4393-8908-5899b8a66194"}},"connectionId":20,"connectionCount":12}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.574+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn19","msg":"client metadata","attr":{"remote":"127.0.0.1:34328","client":"conn19","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.575+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn19","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:34328","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.577+00:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn20","msg":"client metadata","attr":{"remote":"127.0.0.1:34330","client":"conn20","negotiatedCompressors":[],"doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.577+00:00"},"s":"I",  "c":"ACCESS",   "id":10483900,"ctx":"conn20","msg":"Connection not authenticating","attr":{"client":"127.0.0.1:34330","doc":{"application":{"name":"mongosh 2.8.2"},"driver":{"name":"nodejs|mongosh","version":"7.1.0|2.8.2"},"platform":"Node.js v24.14.1, LE","os":{"name":"linux","architecture":"x64","version":"3.10.0-327.22.2.el7.x86_64","type":"Linux"},"env":{"container":{"runtime":"docker"}}}}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.587+00:00"},"s":"I",  "c":"NETWORK",  "id":6788700, "ctx":"conn20","msg":"Received first command on ingress connection since session start or auth handshake","attr":{"elapsedMillis":10}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.776+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn17","msg":"Connection ended","attr":{"remote":"127.0.0.1:34306","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"1ecfa07a-5a35-43a1-a004-a3f0efb071a1"}},"connectionId":17,"connectionCount":11}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.776+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn20","msg":"Connection ended","attr":{"remote":"127.0.0.1:34330","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"140744e0-e56e-4393-8908-5899b8a66194"}},"connectionId":20,"connectionCount":10}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.777+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn19","msg":"Connection ended","attr":{"remote":"127.0.0.1:34328","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"19e15832-f5c7-47d9-ab25-fe0b247e10d9"}},"connectionId":19,"connectionCount":9}}
+mongodb-1  | {"t":{"$date":"2026-04-28T10:37:33.777+00:00"},"s":"I",  "c":"NETWORK",  "id":22944,   "ctx":"conn18","msg":"Connection ended","attr":{"remote":"127.0.0.1:34318","isLoadBalanced":false,"uuid":{"uuid":{"$uuid":"eb76743e-74ed-4bab-ae41-edac885323f1"}},"connectionId":18,"connectionCount":8}}
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+client-1   | 
+client-1   | > tailmate@0.1.0 start
+client-1   | > cross-env CI=false react-scripts start
+client-1   | 
+client-1   | Could not find a required file.
+client-1   |   Name: index.html
+client-1   |   Searched in: /app/public
+[Pipeline] echo
+Build failed ❌
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
