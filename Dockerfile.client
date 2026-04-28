@@ -22,6 +22,14 @@ EXPOSE 3000
 ENV PORT=3000
 ENV CI=false
 ENV CHOKIDAR_USEPOLLING=true
+ENV REACT_APP_API_URL=http://tailmate-server:5000/
+
+# Serve the built app
+CMD ["serve", "-s", "build", "-l", "3000"]
+
+ENV PORT=3000
+ENV CI=false
+ENV CHOKIDAR_USEPOLLING=true
 ENV REACT_APP_API_URL=http://localhost:5000/
 
 # Serve the built app
