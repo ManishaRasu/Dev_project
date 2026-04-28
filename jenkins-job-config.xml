@@ -1,0 +1,29 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.workflow.job.WorkflowJob plugin="workflow-job@1265.v8109c5b_733be">
+  <actions/>
+  <description>TailMate Deployment Pipeline</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2706.v7d763cdb_4296">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.11.3">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>file:///var/jenkins_home/workspace</url>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</org.jenkinsci.plugins.workflow.job.WorkflowJob>
