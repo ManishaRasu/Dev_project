@@ -3,10 +3,10 @@
 ## Pre-Deployment Requirements
 
 ### Local Testing
-- [ ] All services run successfully: `docker-compose up -d`
+- [ ] All services run successfully: `docker compos up -d`
 - [ ] Frontend accessible at http://localhost:3000
 - [ ] Backend accessible at http://localhost:5000/
-- [ ] API health check passes: http://localhost:5000//health
+- [ ] API health check passes: http://localhost:5000/health
 - [ ] MongoDB is connected and working
 - [ ] No build errors in console
 - [ ] All environment variables are set correctly
@@ -47,17 +47,17 @@ nano .env.docker
 ### Build & Run
 ```bash
 # Build images
-docker-compose build
+docker compos build
 
 # Start services
-docker-compose up -d
+docker compos up -d
 
 # Verify services
-docker-compose ps
+docker compos ps
 ```
 
 ### Verification
-- [ ] `docker-compose ps` shows all 3 containers running
+- [ ] `docker compos ps` shows all 3 containers running
 - [ ] MongoDB logs show successful startup
 - [ ] Server logs show "Connected to MongoDB"
 - [ ] Client logs show React is running
@@ -116,13 +116,13 @@ cd pet-adoption-platform
 nano .env.docker
 
 # Build production images
-docker-compose -f docker-compose.prod.yml build
+docker compos -f docker compos.prod.yml build
 
 # Start services
-docker-compose -f docker-compose.prod.yml up -d
+docker compos -f docker compos.prod.yml up -d
 
 # Verify services
-docker-compose -f docker-compose.prod.yml ps
+docker compos -f docker compos.prod.yml ps
 ```
 
 ### Post-Deployment Verification
@@ -146,8 +146,8 @@ docker-compose -f docker-compose.prod.yml ps
 ## Maintenance Tasks
 
 ### Regular Checks (Daily)
-- [ ] Services are running: `docker-compose ps`
-- [ ] No error logs: `docker-compose logs --tail=50`
+- [ ] Services are running: `docker compos ps`
+- [ ] No error logs: `docker compos logs --tail=50`
 - [ ] Health endpoints responding
 - [ ] Database backups completed
 
@@ -171,12 +171,12 @@ docker-compose -f docker-compose.prod.yml ps
 
 **Check**:
 ```bash
-docker-compose ps
-docker-compose logs
+docker compos ps
+docker compos logs
 ```
 
 **Common causes**:
-- [ ] Port already in use → Change port in docker-compose.yml
+- [ ] Port already in use → Change port in docker compos.yml
 - [ ] Docker daemon not running → Start Docker Desktop
 - [ ] No disk space → Free up space
 - [ ] Permission denied → Check Docker permissions
@@ -189,7 +189,7 @@ docker exec -it tailmate-mongodb mongosh
 ```
 
 **Common causes**:
-- [ ] MongoDB not started → `docker-compose up -d mongodb`
+- [ ] MongoDB not started → `docker compos up -d mongodb`
 - [ ] Connection string wrong → Check MONGO_URI
 - [ ] Authentication failed → Check MONGO_USER and MONGO_PASSWORD
 - [ ] Network issue → Check network: `docker network ls`
@@ -198,12 +198,12 @@ docker exec -it tailmate-mongodb mongosh
 
 **Check**:
 ```bash
-curl http://localhost:5000//health
-docker-compose logs server
+curl http://localhost:5000/health
+docker compos logs server
 ```
 
 **Common causes**:
-- [ ] Server not running → `docker-compose up -d server`
+- [ ] Server not running → `docker compos up -d server`
 - [ ] CORS not configured → Check server CORS settings
 - [ ] API URL wrong → Check REACT_APP_API_URL
 - [ ] Network isolation → Check docker network
@@ -212,9 +212,9 @@ docker-compose logs server
 
 **Solution**:
 ```bash
-docker-compose down -v
-docker-compose build --no-cache
-docker-compose up -d
+docker compos down -v
+docker compos build --no-cache
+docker compos up -d
 ```
 
 ---
@@ -224,14 +224,14 @@ docker-compose up -d
 ### If deployment fails
 ```bash
 # Stop current services
-docker-compose down
+docker compos down
 
 # Revert to previous code
 git checkout <previous-commit>
 
 # Rebuild and restart
-docker-compose build
-docker-compose up -d
+docker compos build
+docker compos up -d
 ```
 
 ### If database corrupted
@@ -240,10 +240,10 @@ docker-compose up -d
 docker exec -it tailmate-mongodb mongodump --out /data/backup
 
 # Remove volumes (WARNING: deletes data)
-docker-compose down -v
+docker compos down -v
 
 # Restart clean
-docker-compose up -d
+docker compos up -d
 ```
 
 ---

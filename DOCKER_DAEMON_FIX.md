@@ -119,7 +119,7 @@ After starting Docker, test the setup:
 docker ps
 
 # Check Docker Compose
-docker-compose --version
+docker compos --version
 
 # Try running quickstart
 .\quickstart.bat  # Windows

@@ -44,7 +44,7 @@ All services run in isolated containers and communicate via a shared Docker netw
 2. **Verify Installation**
    ```powershell
    docker --version
-   docker-compose --version
+   docker compos --version
    ```
 
 #### Mac
@@ -59,7 +59,7 @@ brew install docker
 #### Linux
 ```bash
 # Ubuntu/Debian
-sudo apt-get install docker.io docker-compose
+sudo apt-get install docker.io docker compos
 
 # Add user to docker group (avoid sudo)
 sudo usermod -aG docker $USER
@@ -148,23 +148,23 @@ newgrp docker
 
 #### 1. Build from Source
 ```bash
-docker-compose build
+docker compos build
 ```
 
 #### 2. Start Services
 ```bash
-docker-compose up -d
+docker compos up -d
 ```
 
 #### 3. View Logs
 ```bash
 # All services
-docker-compose logs -f
+docker compos logs -f
 
 # Individual service
-docker-compose logs -f server
-docker-compose logs -f client
-docker-compose logs -f mongodb
+docker compos logs -f server
+docker compos logs -f client
+docker compos logs -f mongodb
 ```
 
 #### 4. Access Shell in Container
@@ -199,7 +199,7 @@ Both client and server support hot-reload:
 **Server (Node.js)**:
 - Restart server for changes:
   ```bash
-  docker-compose restart server
+  docker compos restart server
   ```
 
 ---
@@ -210,28 +210,28 @@ Both client and server support hot-reload:
 
 ```bash
 # Start services in foreground (see logs)
-docker-compose up
+docker compos up
 
 # Start services in background
-docker-compose up -d
+docker compos up -d
 
 # Stop services
-docker-compose down
+docker compos down
 
 # View running containers
-docker-compose ps
+docker compos ps
 
 # View logs
-docker-compose logs -f
+docker compos logs -f
 
 # Restart services
-docker-compose restart
+docker compos restart
 
 # Rebuild images
-docker-compose build --no-cache
+docker compos build --no-cache
 
 # Remove containers and volumes
-docker-compose down -v
+docker compos down -v
 
 # Execute command in container
 docker exec -it tailmate-server npm install
@@ -278,17 +278,17 @@ netstat -ano | findstr :3000
 # Mac/Linux
 lsof -i :3000
 
-# Kill process or use different port in docker-compose.yml
+# Kill process or use different port in docker compos.yml
 ```
 
 ### Issue: MongoDB connection refused
 **Check**:
 ```bash
 # Verify MongoDB is running
-docker-compose ps mongodb
+docker compos ps mongodb
 
 # Check logs
-docker-compose logs mongodb
+docker compos logs mongodb
 
 # Test connection
 docker exec -it tailmate-mongodb mongosh --eval "db.adminCommand('ping')"
@@ -298,17 +298,17 @@ docker exec -it tailmate-mongodb mongosh --eval "db.adminCommand('ping')"
 **Solution**:
 ```bash
 # Rebuild with polling enabled
-docker-compose down -v
-docker-compose build
-docker-compose up -d
+docker compos down -v
+docker compos build
+docker compos up -d
 ```
 
 ### Issue: "ENOENT" error when running npm
 **Solution**: Rebuild Docker images
 ```bash
-docker-compose down -v
-docker-compose build --no-cache
-docker-compose up -d
+docker compos down -v
+docker compos build --no-cache
+docker compos up -d
 ```
 
 ### Issue: Services not communicating
@@ -325,13 +325,13 @@ docker exec tailmate-server ping client
 ### View Detailed Error Logs
 ```bash
 # See full logs with timestamps
-docker-compose logs --timestamps
+docker compos logs --timestamps
 
 # See last 100 lines
-docker-compose logs --tail=100
+docker compos logs --tail=100
 
 # Follow specific service
-docker-compose logs -f client
+docker compos logs -f client
 ```
 
 ---
@@ -476,7 +476,7 @@ cd pet-adoption-platform
 nano .env.docker
 
 # Start services
-docker-compose -f docker-compose.yml up -d
+docker compos -f docker compos.yml up -d
 ```
 
 #### With Nginx Reverse Proxy
@@ -511,7 +511,7 @@ docker inspect tailmate-server
 ```
 
 ### Centralized Logging (Optional)
-Add to `docker-compose.yml`:
+Add to `docker compos.yml`:
 ```yaml
 logging:
   driver: "json-file"
@@ -523,7 +523,7 @@ logging:
 ### Health Status
 ```bash
 # Check all services
-docker-compose ps
+docker compos ps
 
 # Detailed health info
 docker inspect --format='{{json .State.Health}}' tailmate-server | jq
@@ -533,7 +533,7 @@ docker inspect --format='{{json .State.Health}}' tailmate-server | jq
 
 ## Next Steps
 
-1. ✅ Run `docker-compose up -d`
+1. ✅ Run `docker compos up -d`
 2. ✅ Test application at http://localhost:3000
 3. ✅ Set up Jenkins pipeline
 4. ✅ Configure monitoring
@@ -551,4 +551,4 @@ docker inspect --format='{{json .State.Health}}' tailmate-server | jq
 
 ---
 
-**Questions or Issues?** Check troubleshooting section or review service logs with `docker-compose logs -f`
+**Questions or Issues?** Check troubleshooting section or review service logs with `docker compos logs -f`

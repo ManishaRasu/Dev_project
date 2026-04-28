@@ -83,7 +83,7 @@ To run TailMate with Jenkins for automated testing and deployment:
 
 1. **Start all services including Jenkins**
    ```bash
-   docker-compose -f docker-compose.jenkins.yml up -d
+   docker compos -f docker compos.jenkins.yml up -d
    ```
 
 2. **Access Jenkins**
@@ -95,7 +95,7 @@ To run TailMate with Jenkins for automated testing and deployment:
    - Copy the Jenkinsfile from the repository
    - The pipeline will automatically start the TailMate containers during the build process
 
-The `docker-compose.jenkins.yml` file includes Jenkins with Docker socket access and automatically starts the TailMate services (MongoDB, server, client) when Jenkins starts.
+The `docker compos.jenkins.yml` file includes Jenkins with Docker socket access and automatically starts the TailMate services (MongoDB, server, client) when Jenkins starts.
 
 ## API Endpoints
 

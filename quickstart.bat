@@ -43,14 +43,14 @@ if %ERRORLEVEL% neq 0 (
 echo ✅ Docker daemon is running
 
 REM Check Docker Compose
-docker-compose --version >nul 2>&1
+docker compos --version >nul 2>&1
 if %ERRORLEVEL% neq 0 (
     echo ❌ Docker Compose is not installed.
     exit /b 1
 )
 
 for /f "tokens=*" %%i in ('docker --version') do set DOCKER_VERSION=%%i
-for /f "tokens=*" %%i in ('docker-compose --version') do set COMPOSE_VERSION=%%i
+for /f "tokens=*" %%i in ('docker compos --version') do set COMPOSE_VERSION=%%i
 
 echo ✅ !DOCKER_VERSION!
 echo ✅ !COMPOSE_VERSION!
@@ -80,22 +80,22 @@ if not exist .env.docker (
 
 echo.
 echo 🐳 Building Docker images (this may take 2-5 minutes^)...
-docker-compose build
+docker compos build
 if %ERRORLEVEL% neq 0 (
     echo.
     echo ❌ Build failed
     echo.
     echo 💡 Troubleshooting:
     echo    - Check Docker Desktop is running: look for whale icon in system tray
-    echo    - Try: docker-compose build --no-cache
-    echo    - View logs: docker-compose logs
+    echo    - Try: docker compos build --no-cache
+    echo    - View logs: docker compos logs
     exit /b 1
 )
 echo ✅ Build complete
 
 echo.
 echo 🚀 Starting services...
-docker-compose up -d
+docker compos up -d
 if %ERRORLEVEL% neq 0 (
     echo ❌ Failed to start services
     exit /b 1
@@ -107,7 +107,7 @@ timeout /t 30 /nobreak
 
 echo.
 echo 📊 Service Status:
-docker-compose ps
+docker compos ps
 
 echo.
 echo 🌐 Application URLs:
@@ -117,9 +117,9 @@ echo    Database: mongodb://localhost:27017
 
 echo.
 echo 📝 Useful commands:
-echo    View logs:          docker-compose logs -f
-echo    Stop services:      docker-compose down
-echo    Restart services:   docker-compose restart
+echo    View logs:          docker compos logs -f
+echo    Stop services:      docker compos down
+echo    Restart services:   docker compos restart
 echo    Enter server:       docker exec -it tailmate-server sh
 
 echo.

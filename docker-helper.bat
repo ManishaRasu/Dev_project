@@ -24,59 +24,59 @@ if "%1"=="" (
 
 if "%1"=="up" (
     echo Starting all services...
-    docker-compose up -d
+    docker compos up -d
     echo Services started. Waiting for health checks...
     timeout /t 5
-    docker-compose ps
+    docker compos ps
     goto :EOF
 )
 
 if "%1"=="down" (
     echo Stopping all services...
-    docker-compose down
+    docker compos down
     goto :EOF
 )
 
 if "%1"=="rebuild" (
     echo Rebuilding Docker images...
-    docker-compose build --no-cache
+    docker compos build --no-cache
     goto :EOF
 )
 
 if "%1"=="logs" (
-    docker-compose logs -f
+    docker compos logs -f
     goto :EOF
 )
 
 if "%1"=="logs-server" (
-    docker-compose logs -f server
+    docker compos logs -f server
     goto :EOF
 )
 
 if "%1"=="logs-client" (
-    docker-compose logs -f client
+    docker compos logs -f client
     goto :EOF
 )
 
 if "%1"=="logs-db" (
-    docker-compose logs -f mongodb
+    docker compos logs -f mongodb
     goto :EOF
 )
 
 if "%1"=="ps" (
-    docker-compose ps
+    docker compos ps
     goto :EOF
 )
 
 if "%1"=="restart" (
     echo Restarting all services...
-    docker-compose restart
+    docker compos restart
     goto :EOF
 )
 
 if "%1"=="clean" (
     echo Removing containers and volumes...
-    docker-compose down -v
+    docker compos down -v
     goto :EOF
 )
 

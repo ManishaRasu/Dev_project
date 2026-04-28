@@ -49,13 +49,13 @@ fi
 echo "✅ Docker daemon is running"
 
 # Check Docker Compose
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker compos &> /dev/null; then
     echo "❌ Docker Compose is not installed."
     exit 1
 fi
 
 echo "✅ $(docker --version)"
-echo "✅ $(docker-compose --version)"
+echo "✅ $(docker compos --version)"
 echo ""
 
 # Check if .env.docker exists
@@ -82,21 +82,21 @@ fi
 
 echo ""
 echo "🐳 Building Docker images (this may take 2-5 minutes)..."
-if ! docker-compose build; then
+if ! docker compos build; then
     echo ""
     echo "❌ Build failed"
     echo ""
     echo "💡 Troubleshooting:"
     echo "   - Check Docker is running"
-    echo "   - Try: docker-compose build --no-cache"
-    echo "   - View logs: docker-compose logs"
+    echo "   - Try: docker compos build --no-cache"
+    echo "   - View logs: docker compos logs"
     exit 1
 fi
 echo "✅ Build complete"
 
 echo ""
 echo "🚀 Starting services..."
-docker-compose up -d
+docker compos up -d
 
 echo ""
 echo "⏳ Waiting for services to be healthy (30 seconds)..."
@@ -104,7 +104,7 @@ sleep 30
 
 echo ""
 echo "📊 Service Status:"
-docker-compose ps
+docker compos ps
 
 echo ""
 echo "🌐 Application URLs:"
@@ -114,9 +114,9 @@ echo "   Database: mongodb://localhost:27017"
 
 echo ""
 echo "📝 Useful commands:"
-echo "   View logs:          docker-compose logs -f"
-echo "   Stop services:      docker-compose down"
-echo "   Restart services:   docker-compose restart"
+echo "   View logs:          docker compos logs -f"
+echo "   Stop services:      docker compos down"
+echo "   Restart services:   docker compos restart"
 echo "   Enter server:       docker exec -it tailmate-server sh"
 
 echo ""

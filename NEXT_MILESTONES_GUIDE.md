@@ -48,7 +48,7 @@ node_modules/
 .DS_Store
 /build
 /dist
-docker-compose.override.yml
+docker compos.override.yml
 ```
 
 If `.gitignore` doesn't exist, create it with the content above.
@@ -333,7 +333,7 @@ newgrp docker
 
 # Verify installation
 docker --version
-docker-compose --version
+docker compos --version
 ```
 
 ## Step 3: Clone Repository on Server
@@ -381,16 +381,16 @@ Press `Ctrl+X` → `Y` → `Enter` to save.
 
 ```bash
 # Build images
-docker-compose -f docker-compose.prod.yml build
+docker compos -f docker compos.prod.yml build
 
 # Start services
-docker-compose -f docker-compose.prod.yml up -d
+docker compos -f docker compos.prod.yml up -d
 
 # Verify services
-docker-compose -f docker-compose.prod.yml ps
+docker compos -f docker compos.prod.yml ps
 
 # Check logs
-docker-compose -f docker-compose.prod.yml logs
+docker compos -f docker compos.prod.yml logs
 ```
 
 ## Step 6: Set Up Nginx Reverse Proxy (HTTPS)
@@ -474,8 +474,8 @@ Requires=docker.service
 Type=oneshot
 RemainAfterExit=yes
 WorkingDirectory=/opt/pet-adoption-platform
-ExecStart=/usr/bin/docker-compose -f docker-compose.prod.yml up -d
-ExecStop=/usr/bin/docker-compose -f docker-compose.prod.yml down
+ExecStart=/usr/bin/docker compos -f docker compos.prod.yml up -d
+ExecStop=/usr/bin/docker compos -f docker compos.prod.yml down
 Restart=unless-stopped
 
 [Install]
@@ -500,10 +500,10 @@ sudo systemctl enable unattended-upgrades
 
 ```bash
 # Check services running
-docker-compose -f docker-compose.prod.yml ps
+docker compos -f docker compos.prod.yml ps
 
 # Check logs
-docker-compose -f docker-compose.prod.yml logs -f
+docker compos -f docker compos.prod.yml logs -f
 
 # Test API
 curl https://your-domain.com/health
@@ -526,23 +526,23 @@ https://your-domain.com
 
 ```bash
 # All logs
-docker-compose logs -f
+docker compos logs -f
 
 # Specific service
-docker-compose logs -f server
-docker-compose logs -f client
-docker-compose logs -f mongodb
+docker compos logs -f server
+docker compos logs -f client
+docker compos logs -f mongodb
 
 # Last 100 lines
-docker-compose logs --tail=100
+docker compos logs --tail=100
 
 # With timestamps
-docker-compose logs --timestamps
+docker compos logs --timestamps
 ```
 
 ## Step 2: Set Up Local Log Rotation
 
-Update `docker-compose.yml`:
+Update `docker compos.yml`:
 ```yaml
 services:
   server:
@@ -572,7 +572,7 @@ services:
 
 Then restart:
 ```bash
-docker-compose restart
+docker compos restart
 ```
 
 ## Step 3: Container Resource Monitoring
@@ -590,7 +590,7 @@ docker inspect --format='{{json .State}}' tailmate-server | jq
 
 ## Step 4: Set Up Prometheus + Grafana (Advanced)
 
-### A. Add Prometheus to docker-compose.yml
+### A. Add Prometheus to docker compos.yml
 
 Create `prometheus.yml`:
 ```yaml
@@ -603,7 +603,7 @@ scrape_configs:
       - targets: ['localhost:9323']
 ```
 
-Add to `docker-compose.yml`:
+Add to `docker compos.yml`:
 ```yaml
 services:
   prometheus:
@@ -639,7 +639,7 @@ volumes:
 ### B. Start Monitoring Stack
 
 ```bash
-docker-compose up -d prometheus grafana
+docker compos up -d prometheus grafana
 
 # Access Grafana
 # http://localhost:3001
@@ -659,7 +659,7 @@ EMAIL="your-email@example.com"
 HOSTNAME=$(hostname)
 
 # Check server health
-if ! curl -f http://localhost:5000//health > /dev/null 2>&1; then
+if ! curl -f http://localhost:5000/health > /dev/null 2>&1; then
     echo "Server is DOWN on $HOSTNAME at $(date)" | \
     mail -s "ALERT: Pet Adoption Server Down" $EMAIL
 fi
@@ -737,7 +737,7 @@ mkdir -p $BACKUP_DIR
 # Backup entire application
 tar --exclude='node_modules' \
     --exclude='.git' \
-    --exclude='docker-compose.override.yml' \
+    --exclude='docker compos.override.yml' \
     -czf $BACKUP_FILE \
     /opt/pet-adoption-platform
 
@@ -810,14 +810,14 @@ docker exec -i tailmate-mongodb mongorestore /dump_2024-04-16_02-00-00
 ### Application Restore
 ```bash
 # Stop services
-docker-compose down
+docker compos down
 
 # Restore files
 cd ~
 tar xzf /opt/backups/application/backup_2024-04-16_03-00-00.tar.gz
 
 # Restart services
-docker-compose up -d
+docker compos up -d
 ```
 
 ## ✅ Verification
@@ -864,7 +864,7 @@ tar xzf /opt/backups/application/backup_*.tar.gz -C /tmp/
 - [ ] Auto-start on reboot configured
 
 ### Milestone 4: Monitoring & Logging
-- [ ] Logs viewable via `docker-compose logs`
+- [ ] Logs viewable via `docker compos logs`
 - [ ] Log rotation configured
 - [ ] Resource monitoring set up
 - [ ] Email alerts configured

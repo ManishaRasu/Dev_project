@@ -61,7 +61,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>docker --version
 Docker version 29.2.1, build a5c7197
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose --version 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos --version 
 Docker Compose version v5.0.2
 [Pipeline] bat
 
@@ -81,7 +81,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>npm --version
 [Pipeline] {
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose build 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos build 
  Image tailmate-client Building 
  Image tailmate-server Building 
 #1 [internal] load local bake definitions
@@ -189,7 +189,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>docker-compose build
 [Pipeline] {
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose down --volumes --remove-orphans   || true
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos down --volumes --remove-orphans   || true
  Network tailmate_tailmate-network Removing 
  Volume tailmate_mongodb_config Removing 
  Volume tailmate_mongodb_data Removing 
@@ -244,7 +244,7 @@ Total reclaimed space: 0B
 [Pipeline] {
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose up -d 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos up -d 
  Network tailmate_tailmate-network Creating 
  Network tailmate_tailmate-network Created 
  Volume tailmate_mongodb_data Creating 

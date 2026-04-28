@@ -24,41 +24,41 @@ fi
 case "$1" in
     up)
         echo "Starting all services..."
-        docker-compose up -d
+        docker compos up -d
         echo "Services started. Waiting for health checks..."
         sleep 5
-        docker-compose ps
+        docker compos ps
         ;;
     down)
         echo "Stopping all services..."
-        docker-compose down
+        docker compos down
         ;;
     rebuild)
         echo "Rebuilding Docker images..."
-        docker-compose build --no-cache
+        docker compos build --no-cache
         ;;
     logs)
-        docker-compose logs -f
+        docker compos logs -f
         ;;
     logs-server)
-        docker-compose logs -f server
+        docker compos logs -f server
         ;;
     logs-client)
-        docker-compose logs -f client
+        docker compos logs -f client
         ;;
     logs-db)
-        docker-compose logs -f mongodb
+        docker compos logs -f mongodb
         ;;
     ps)
-        docker-compose ps
+        docker compos ps
         ;;
     restart)
         echo "Restarting all services..."
-        docker-compose restart
+        docker compos restart
         ;;
     clean)
         echo "Removing containers and volumes..."
-        docker-compose down -v
+        docker compos down -v
         ;;
     bash-server)
         docker exec -it tailmate-server sh

@@ -5,8 +5,8 @@
 Your Pet Adoption Platform is now fully configured for dockerized deployment! Here's what was set up:
 
 ### 1. **Docker Configuration Files**
-✅ **docker-compose.yml** - Production-ready orchestration with 3 services (MongoDB, Server, Client)
-✅ **docker-compose.prod.yml** - Secure production deployment with authentication
+✅ **docker compos.yml** - Production-ready orchestration with 3 services (MongoDB, Server, Client)
+✅ **docker compos.prod.yml** - Secure production deployment with authentication
 ✅ **.env.docker** - Environment variables for development
 ✅ **.dockerignore** - Optimized Docker build context
 
@@ -96,30 +96,30 @@ chmod +x quickstart.sh
 
 ### Start All Services
 ```bash
-docker-compose up -d
+docker compos up -d
 ```
 
 ### View Service Status
 ```bash
-docker-compose ps
+docker compos ps
 ```
 
 ### View Real-Time Logs
 ```bash
-docker-compose logs -f           # All services
-docker-compose logs -f server    # Just server
-docker-compose logs -f client    # Just client
-docker-compose logs -f mongodb   # Just MongoDB
+docker compos logs -f           # All services
+docker compos logs -f server    # Just server
+docker compos logs -f client    # Just client
+docker compos logs -f mongodb   # Just MongoDB
 ```
 
 ### Stop Services
 ```bash
-docker-compose down
+docker compos down
 ```
 
 ### Restart Services
 ```bash
-docker-compose restart
+docker compos restart
 ```
 
 ### Access Container Shell
@@ -131,7 +131,7 @@ docker exec -it tailmate-mongodb mongosh  # MongoDB
 
 ### Rebuild Images
 ```bash
-docker-compose build --no-cache
+docker compos build --no-cache
 ```
 
 ---
@@ -141,11 +141,11 @@ docker-compose build --no-cache
 After running `quickstart.bat` or `quickstart.sh`, verify:
 
 - [ ] Docker is installed: `docker --version`
-- [ ] Docker Compose installed: `docker-compose --version`
+- [ ] Docker Compose installed: `docker compos --version`
 - [ ] `.env.docker` file exists
-- [ ] All 3 containers running: `docker-compose ps`
+- [ ] All 3 containers running: `docker compos ps`
 - [ ] Frontend loads: http://localhost:3000
-- [ ] Backend responds: http://localhost:5000//health
+- [ ] Backend responds: http://localhost:5000/health
 - [ ] MongoDB logs show "Connection string" message
 - [ ] No error messages in logs
 
@@ -157,7 +157,7 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 1. Run `quickstart.bat` or `quickstart.sh`
 2. Application will start automatically
 3. Frontend hot-reload enabled (changes auto-refresh)
-4. Restart server for backend changes: `docker-compose restart server`
+4. Restart server for backend changes: `docker compos restart server`
 
 ### For Jenkins CI/CD Setup
 1. Install Jenkins on your CI/CD server
@@ -169,7 +169,7 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 
 ### For Production Deployment
 1. Review **DEPLOYMENT_CHECKLIST.md**
-2. Use **docker-compose.prod.yml** instead of docker-compose.yml
+2. Use **docker compos.prod.yml** instead of docker compos.yml
 3. Create `.env.docker` with production secrets (different from dev)
 4. Update MongoDB credentials and JWT_SECRET
 5. Set REACT_APP_API_URL to production domain
@@ -183,8 +183,8 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 |----------|---------|-------------|
 | DOCKER_GUIDE.md | Full setup & troubleshooting | First time setup |
 | DEPLOYMENT_CHECKLIST.md | Pre-deployment verification | Before any deployment |
-| docker-compose.yml | Development config | Review architecture |
-| docker-compose.prod.yml | Production config | Production deployment |
+| docker compos.yml | Development config | Review architecture |
+| docker compos.prod.yml | Production config | Production deployment |
 | Jenkinsfile | CI/CD pipeline | Jenkins setup |
 
 ---
@@ -195,16 +195,16 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 → Open Docker Desktop app on Windows/Mac
 
 **Q: Port 3000 or 5000 in use?**  
-→ Change ports in docker-compose.yml
+→ Change ports in docker compos.yml
 
 **Q: MongoDB won't connect?**  
-→ Check: `docker-compose logs mongodb`
+→ Check: `docker compos logs mongodb`
 
 **Q: Services won't start?**  
-→ View full logs: `docker-compose logs`
+→ View full logs: `docker compos logs`
 
 **Q: Hot reload not working?**  
-→ Rebuild: `docker-compose down -v && docker-compose up -d`
+→ Rebuild: `docker compos down -v && docker compos up -d`
 
 **Still stuck?**  
 → See DOCKER_GUIDE.md Troubleshooting section for detailed solutions
@@ -215,8 +215,8 @@ After running `quickstart.bat` or `quickstart.sh`, verify:
 
 ```
 pet_adoption_platform/
-├── docker-compose.yml           ← Development config
-├── docker-compose.prod.yml      ← Production config
+├── docker compos.yml           ← Development config
+├── docker compos.prod.yml      ← Production config
 ├── Dockerfile.server            ← Server image
 ├── Dockerfile.client            ← Client image
 ├── Dockerfile.server (server/)  ← Alt location
@@ -250,7 +250,7 @@ pet_adoption_platform/
 
 - [ ] JWT_SECRET changed from default value
 - [ ] MongoDB password protected (in prod config)
-- [ ] API credentials not in docker-compose.yml
+- [ ] API credentials not in docker compos.yml
 - [ ] Secrets managed in .env.docker (added to .gitignore)
 - [ ] HTTPS configured for production (via reverse proxy)
 - [ ] No debug mode in production

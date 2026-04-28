@@ -61,7 +61,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>docker --version
 Docker version 29.2.1, build a5c7197
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose --version 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos --version 
 Docker Compose version v5.0.2
 [Pipeline] bat
 
@@ -81,7 +81,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>npm --version
 [Pipeline] {
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose build 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos build 
  Image tailmate-server Building 
  Image tailmate-client Building 
 #1 [internal] load local bake definitions
@@ -181,7 +181,7 @@ C:\jenkins-agent\workspace\tailmate-deployment>docker-compose build
 [Pipeline] {
 [Pipeline] bat
 
-C:\jenkins-agent\workspace\tailmate-deployment>docker-compose up -d 
+C:\jenkins-agent\workspace\tailmate-deployment>docker compos up -d 
  Container tailmate-mongodb Creating 
  Container tailmate-mongodb Error response from daemon: Conflict. The container name "/tailmate-mongodb" is already in use by container "aac4ed5986ecc0a8230c2ed7b37705a53a1cf5450ce5c114a4cdeea0f60b22d9". You have to remove (or rename) that container to be able to reuse that name. 
 Error response from daemon: Conflict. The container name "/tailmate-mongodb" is already in use by container "aac4ed5986ecc0a8230c2ed7b37705a53a1cf5450ce5c114a4cdeea0f60b22d9". You have to remove (or rename) that container to be able to reuse that name.
