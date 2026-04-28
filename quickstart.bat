@@ -113,7 +113,7 @@ echo.
 echo 🌐 Application URLs:
 echo    Frontend: http://localhost:3000
 echo    Backend:  http://localhost:5000/
-echo    Database: mongodb://localhost:27017
+echo    Database: mongodb://mongodb:27017
 
 echo.
 echo 📝 Useful commands:

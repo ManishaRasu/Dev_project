@@ -88,7 +88,7 @@ chmod +x quickstart.sh
 **Access URLs:**
 - Frontend: http://localhost:3000
 - Backend: http://localhost:5000/  
-- Database: mongodb://localhost:27017
+- Database: mongodb://mongodb:27017
 
 ---
 
