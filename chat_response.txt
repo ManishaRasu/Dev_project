@@ -1,0 +1,49 @@
+I'll retrieve the logs for this failing job to identify the issue and suggest a solution.Now let me get the Dockerfile and workflow file to understand the issue better:## Problem
+
+The Docker build is failing with `react-scripts: not found` (exit code 127). The issue is in your `package.json` on line 25:
+
+```json
+"react-scripts": "^0.0.0"
+```
+
+This is an **invalid version**. The `^0.0.0` version constraint doesn't match any real release of `react-scripts`, so npm cannot install it during the Docker build.
+
+## Solution
+
+Update your `package.json` to use a valid version of `react-scripts`:
+
+```json
+{
+  "name": "tailmate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "form-data": "^4.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
+    "mongoose": "^8.0.3",
+    "multer": "^2.0.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.7.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  ...
+}
+```
+
+Change `"react-scripts": "^0.0.0"` to `"react-scripts": "5.0.1"` (or another valid version compatible with React 19).
+
+Once you commit this fix, the Docker build will successfully install `react-scripts` and complete the `npm run build` step.

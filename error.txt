@@ -1,0 +1,129 @@
+Run docker compose build --no-cache
+#1 [internal] load local bake definitions
+#1 reading from stdin 747B done
+#1 DONE 0.0s
+
+#2 [client internal] load build definition from Dockerfile.client
+#2 transferring dockerfile: 1.00kB done
+#2 DONE 0.0s
+
+#3 [server internal] load build definition from Dockerfile.server
+#3 transferring dockerfile: 623B done
+#3 DONE 0.0s
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [server internal] load metadata for docker.io/library/node:20-alpine
+#5 DONE 0.5s
+
+#6 [client internal] load .dockerignore
+#6 transferring context: 151B done
+#6 DONE 0.0s
+
+#7 [client 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#7 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 done
+#7 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 0.1s done
+#7 ...
+
+#8 [server internal] load build context
+#8 transferring context: 7.98MB 0.1s done
+#8 DONE 0.1s
+
+#7 [client 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#7 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 0.1s done
+#7 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 0.1s done
+#7 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.1s done
+#7 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 9.44MB / 43.23MB 0.2s
+#7 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.1s done
+#7 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 0.4s done
+#7 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 0.4s done
+#7 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287
+#7 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 0.9s done
+#7 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 0.9s done
+#7 extracting sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0.0s done
+#7 extracting sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 done
+#7 DONE 1.4s
+
+#9 [client 2/7] WORKDIR /app
+#9 DONE 0.6s
+
+#10 [client 3/6] COPY package*.json ./
+#10 DONE 0.0s
+
+#11 [client 4/6] RUN npm install && npm cache clean --force
+#11 ...
+
+#12 [server 3/7] RUN apk add --no-cache curl
+#12 0.432 ( 1/10) Installing brotli-libs (1.2.0-r0)
+#12 0.442 ( 2/10) Installing c-ares (1.34.6-r0)
+#12 0.447 ( 3/10) Installing libunistring (1.4.1-r0)
+#12 0.460 ( 4/10) Installing libidn2 (2.3.8-r0)
+#12 0.464 ( 5/10) Installing nghttp2-libs (1.68.0-r0)
+#12 0.467 ( 6/10) Installing nghttp3 (1.13.1-r0)
+#12 0.471 ( 7/10) Installing libpsl (0.21.5-r3)
+#12 0.474 ( 8/10) Installing zstd-libs (1.5.7-r2)
+#12 0.482 ( 9/10) Installing libcurl (8.17.0-r1)
+#12 0.490 (10/10) Installing curl (8.17.0-r1)
+#12 0.495 Executing busybox-1.37.0-r30.trigger
+#12 0.503 OK: 16.0 MiB in 28 packages
+#12 DONE 0.5s
+
+#13 [server 4/7] COPY package*.json ./
+#13 DONE 0.0s
+
+#14 [server 5/7] RUN npm install && npm cache clean --force
+#14 ...
+
+#11 [client 4/6] RUN npm install && npm cache clean --force
+#11 70.93 npm error code ENOTFOUND
+#11 70.93 npm error syscall getaddrinfo
+#11 70.93 npm error errno ENOTFOUND
+Dockerfile.client:30
+#11 70.93 npm error network request to http://server-service:5000/ failed, reason: getaddrinfo ENOTFOUND server-service
+
+#11 70.93 npm error network This is a problem related to network connectivity.
+#11 70.93 npm error network In most cases you are behind a proxy or have bad network settings.
+#11 70.93 npm error network
+#11 70.93 npm error network If you are behind a proxy, please make sure that the
+#11 70.93 npm error network 'proxy' config is set properly.  See: 'npm help config'
+#11 70.94 npm notice
+--------------------
+
+  28 |     
+
+  29 |     # Install dependencies (including dev for building React)
+
+  30 | >>> RUN npm install && npm cache clean --force
+
+  31 |     
+
+  32 |     # Copy application code
+
+--------------------
+
+target client: failed to solve: process "/bin/sh -c npm install && npm cache clean --force" did not complete successfully: exit code: 1
+
+#11 70.94 npm notice New major version of npm available! 10.8.2 -> 11.13.0
+#11 70.94 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.13.0
+#11 70.94 npm notice To update run: npm install -g npm@11.13.0
+#11 70.94 npm notice
+#11 70.94 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-27T16_11_20_150Z-debug-0.log
+#11 ERROR: process "/bin/sh -c npm install && npm cache clean --force" did not complete successfully: exit code: 1
+
+#14 [server 5/7] RUN npm install && npm cache clean --force
+#14 CANCELED
+------
+ > [client 4/6] RUN npm install && npm cache clean --force:
+70.93 npm error network In most cases you are behind a proxy or have bad network settings.
+70.93 npm error network
+70.93 npm error network If you are behind a proxy, please make sure that the
+70.93 npm error network 'proxy' config is set properly.  See: 'npm help config'
+70.94 npm notice
+70.94 npm notice New major version of npm available! 10.8.2 -> 11.13.0
+70.94 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.13.0
+70.94 npm notice To update run: npm install -g npm@11.13.0
+70.94 npm notice
+70.94 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-27T16_11_20_150Z-debug-0.log
+------
+Error: Process completed with exit code 1.

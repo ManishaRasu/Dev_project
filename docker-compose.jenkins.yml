@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    networks:
+      - tailmate-network
+    depends_on:
+      - tailmate-mongodb
+      - tailmate-server
+      - tailmate-client
+
+  tailmate-mongodb:
+    image: mongo:7.0
+    container_name: tailmate-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=petad
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - tailmate-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  tailmate-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: tailmate-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://tailmate-mongodb:27017/petad
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key}
+      - NODE_ENV=development
+    depends_on:
+      tailmate-mongodb:
+        condition: service_healthy
+    networks:
+      - tailmate-network
+    volumes:
+      - ./server:/app/server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000//health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  tailmate-client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: tailmate-client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/
+      - CHOKIDAR_USEPOLLING=true
+      - CI=false
+    depends_on:
+      - tailmate-server
+    networks:
+      - tailmate-network
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+
+networks:
+  tailmate-network:
+    driver: bridge
+
+volumes:
+  jenkins_home:
+  mongodb_data:
+  mongodb_config:

@@ -42,16 +42,21 @@ pipeline {
         stage('Cleanup') {
     steps {
         script {
-            bat 'docker rm -f tailmate-mongodb tailmate-server tailmate-client || true'
-            bat 'docker-compose down --volumes --remove-orphans || true'
-            bat 'docker system prune -f || true'
+            bat '''
+                docker rm -f tailmate-mongodb tailmate-server tailmate-client 2>nul || exit /b 0
+                docker rm -f tailmate 2>nul || exit /b 0
+                docker-compose down --volumes --remove-orphans 2>nul || exit /b 0
+                docker system prune -f 2>nul || exit /b 0
+            '''
         }
     }
 }
 stage('Start Services') {
     steps {
         script {
-            bat 'docker-compose up -d'
+            bat '''
+                docker start tailmate 2>nul || docker-compose up -d
+            '''
             sleep(time: 30, unit: 'SECONDS')
         }
     }

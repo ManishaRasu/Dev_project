@@ -77,6 +77,26 @@ A full-stack React application for pet adoption with Express.js backend and Mong
 - **Email:** admin@tailmate.com
 - **Password:** admin123
 
+## Running with Jenkins CI/CD
+
+To run TailMate with Jenkins for automated testing and deployment:
+
+1. **Start all services including Jenkins**
+   ```bash
+   docker-compose -f docker-compose.jenkins.yml up -d
+   ```
+
+2. **Access Jenkins**
+   - Jenkins UI: http://localhost:8080
+   - Initial admin password: `docker exec tailmate-jenkins cat /var/jenkins_home/secrets/initialAdminPassword`
+
+3. **Configure Jenkins Job**
+   - Create a new pipeline job
+   - Copy the Jenkinsfile from the repository
+   - The pipeline will automatically start the TailMate containers during the build process
+
+The `docker-compose.jenkins.yml` file includes Jenkins with Docker socket access and automatically starts the TailMate services (MongoDB, server, client) when Jenkins starts.
+
 ## API Endpoints
 
 ### Authentication
