@@ -85,6 +85,12 @@ pipeline {
             }
         }
 
+        stage('Force Cleanup') {
+            steps {
+                sh 'docker rm -f tailmate-mongodb tailmate-server tailmate-client || true'
+            }
+        }
+
         stage('Stop Old Containers') {
             steps {
                 sh 'docker compose down --remove-orphans'

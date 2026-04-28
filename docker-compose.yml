@@ -75,7 +75,6 @@
 services:
   mongodb:
     image: mongo:7.0
-    container_name: tailmate-mongodb
     restart: unless-stopped
     ports:
       - "27017:27017"
@@ -96,7 +95,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
-    container_name: tailmate-server
     restart: unless-stopped
     ports:
       - "5000:5000"
@@ -123,7 +121,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
-    container_name: tailmate-client
     restart: unless-stopped
     ports:
       - "3000:3000"
