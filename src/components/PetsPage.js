@@ -60,7 +60,8 @@ function PetsPage() {
   const fetchPets = async () => {
     try {
       const response = await axios.get('api/pets');
-      setPets(response.data);
+      const petsData = response.data;
+      setPets(Array.isArray(petsData) ? petsData : petsData?.pets || []);
     } catch (error) {
       setError('Failed to fetch pets');
       console.error('Error fetching pets:', error);
@@ -77,9 +78,9 @@ function PetsPage() {
     navigate(`/pets/${pet._id}/request`);
   };
 
-  const breedOptions = [...new Set(pets.filter(p => !selectedType || p.type === selectedType).map(p => p.breed))];
+  const breedOptions = Array.isArray(pets) ? [...new Set(pets.filter(p => !selectedType || p.type === selectedType).map(p => p.breed))] : [];
 
-  const filteredPets = pets.filter(pet => {
+  const filteredPets = Array.isArray(pets) ? pets.filter(pet => {
     const matchesSearch = !searchQuery ||
       pet.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       pet.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -94,7 +95,7 @@ function PetsPage() {
       (!selectedAge || pet.age.toString() === selectedAge) &&
       (!selectedGender || pet.gender === selectedGender)
     );
-  });
+  }) : [];
 
   const isFavorite = (petId) => {
     return favoriteItems.some(item => item._id === petId);
