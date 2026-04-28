@@ -56,12 +56,19 @@
 
 
 
-
 pipeline {
-    agent any
-
+    agent { label 'docker' }
+    
     environment {
         COMPOSE_PROJECT_NAME = "tailmate"
+        REGISTRY = ""
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        TIMESTAMP = bat(script: '@echo off && for /f "tokens=2 delims==" %%i in (\'wmic os get localdatetime /value\') do set datetime=%%i && echo %datetime:~0,8%_%datetime:~8,6%', returnStdout: true).trim()
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 60, unit: 'MINUTES')
     }
 
     stages {
@@ -71,56 +78,70 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Environment Check') {
             steps {
-                // Using generic script step (bat for Windows, sh for Linux)
-                // Assuming Jenkins is running on the host OS
                 script {
-                    if (isUnix()) {
-                        sh 'docker-compose build'
-                    } else {
-                        bat 'docker-compose build'
-                    }
+                    bat 'docker --version'
+                    bat 'docker-compose --version'
+                    bat 'node --version'
+                    bat 'npm --version'
                 }
             }
         }
 
-        stage('Deploy with Docker Compose') {
+        stage('Build Docker Images') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh 'docker-compose up -d'
-                    } else {
-                        bat 'docker-compose up -d'
-                    }
+                    bat 'docker-compose build'
+                }
+            }
+        }
+
+        stage('Cleanup') {
+    steps {
+        script {
+            bat 'docker rm -f tailmate-mongodb tailmate-server tailmate-client || true'
+            bat 'docker-compose down --volumes --remove-orphans || true'
+            bat 'docker system prune -f || true'
+        }
+    }
+}
+stage('Start Services') {
+    steps {
+        script {
+            bat 'docker-compose up -d'
+            sleep(time: 30, unit: 'SECONDS')
+        }
+    }
+}
+
+        stage('Health Checks') {
+            steps {
+                script {
+                    bat 'docker-compose ps'
+                    bat 'curl -f http://localhost:5000/health || exit 1'
+                    bat 'curl -f http://localhost:3000 || exit 1'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    echo "Tests skipped (configure when ready)"
+                }
+            }
+        }
+
+        stage('Service Status') {
+            steps {
+                script {
+                    bat 'docker-compose ps'
+                    bat 'docker-compose logs --tail=20'
                 }
             }
         }
     }
-    
-    post {
-        always {
-            echo 'Pipeline has finished execution.'
-        }
-        success {
-            echo 'Deployment successful. Checking services...'
-            script {
-                    if (isUnix()) {
-                        sh 'docker-compose ps'
-                    } else {
-                        bat 'docker-compose ps'
-                    }
-                }
-        }
-        failure {
-            echo 'Deployment failed. Gathering logs...'
-            script {
-                    if (isUnix()) {
-                        sh 'docker-compose logs'
-                    } else {
-                        bat 'docker-compose logs'
-                    }
-                }
-        }
-    }
 }
+
+
