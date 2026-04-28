@@ -31,7 +31,8 @@ export default function MapAllPets() {
         const fetchPets = async () => {
             try {
                 const res = await axios.get('api/pets');
-                setPets(res.data || []);
+                const petsData = res.data;
+                setPets(Array.isArray(petsData) ? petsData : petsData?.pets || []);
             } catch (err) {
                 console.error('Failed to fetch pets', err.message || err);
                 setError('Failed to load pets');
@@ -91,6 +92,7 @@ export default function MapAllPets() {
 
     useEffect(() => {
         if (!mapInstance.current) return;
+        if (!Array.isArray(pets)) return;
 
         // clear existing markers
         markersRef.current.forEach(m => {
