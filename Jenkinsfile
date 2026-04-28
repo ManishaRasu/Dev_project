@@ -110,21 +110,27 @@ pipeline {
         }
 
         stage('Health Check') {
-            steps {
-                sh '''
-                for i in {1..10}
-                do
-                  docker compose exec -T server curl -f http://localhost:5000/health && break
-                  echo "Waiting for backend..."
-                  sleep 5
-                done
-                '''
+    steps {
+        sh '''
+        for i in {1..10}
+        do
+          docker compose exec -T server curl -f http://localhost:5000/health && break
+          echo "Waiting for backend..."
+          sleep 5
+        done
+        '''
 
-                sh '''
-                docker compose exec -T client curl -f http://localhost:3000 || exit 1
-                '''
-            }
-        }
+        // Add retry loop for client too
+        sh '''
+        for i in {1..10}
+        do
+          docker compose exec -T client curl -f http://localhost:3000 && break
+          echo "Waiting for frontend..."
+          sleep 5
+        done
+        '''
+    }
+}
 
         stage('Show Logs') {
             steps {

@@ -1,64 +1,15 @@
-FROM node:20-alpine
-
+# Stage 1: Build
+FROM node:20-alpine AS stage-1
 WORKDIR /app
-
-# Copy package files first (for better layer caching)
 COPY package*.json ./
-
-# Install dependencies (including dev for building React)
 RUN npm install && npm cache clean --force
-
-# Copy application code
 COPY . .
-
-# Build the React app
 RUN npm run build
 
-# Install serve for production
+# Stage 2: Serve the built files
+FROM node:20-alpine
+WORKDIR /app
 RUN npm install -g serve
-
+COPY --from=stage-1 /app/build ./build
 EXPOSE 3000
-
-ENV PORT=3000
-ENV CI=false
-ENV CHOKIDAR_USEPOLLING=true
-ENV REACT_APP_API_URL=http://tailmate-server:5000/
-
-# Serve the built app
 CMD ["serve", "-s", "build", "-l", "3000"]
-
-ENV PORT=3000
-ENV CI=false
-ENV CHOKIDAR_USEPOLLING=true
-ENV REACT_APP_API_URL=http://localhost:5000/
-
-# Serve the built app
-CMD ["serve", "-s", "build", "-l", "3000"]
-
-# CMD ["npm", "start"]
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Copy package files first (for better layer caching)
-COPY package*.json ./
-
-# Install dependencies (including dev for building React)
-RUN npm install && npm cache clean --force
-
-# Copy application code
-COPY . .
-
-# Build the React app (this creates the optimized production build)
-RUN npm run build
-
-EXPOSE 3000
-
-# Set environment variables for runtime only
-ENV PORT=3000
-ENV CI=false
-ENV CHOKIDAR_USEPOLLING=true
-ENV REACT_APP_API_URL=http://server-service:5000
-
-# Serve the built app
-CMD ["npm", "start"]
