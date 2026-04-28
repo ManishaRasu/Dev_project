@@ -4,16 +4,12 @@ WORKDIR /app
 
 RUN apk add --no-cache curl
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install && npm cache clean --force
 
-# Copy all server code
 COPY . .
 
-# Create uploads folder
 RUN mkdir -p uploads
 
 EXPOSE 5000
