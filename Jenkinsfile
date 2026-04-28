@@ -85,13 +85,13 @@ pipeline {
             }
         }
 
-        stage('Build & Start') {
+        stage('Build & Start Services') {
             steps {
                 bat 'docker compose up --build -d'
             }
         }
 
-        stage('Wait') {
+        stage('Wait for Services') {
             steps {
                 sleep(time: 20, unit: 'SECONDS')
             }
@@ -105,10 +105,19 @@ pipeline {
             }
         }
 
-        stage('Logs') {
+        stage('Show Logs') {
             steps {
                 bat 'docker compose logs --tail=20'
             }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Build failed ❌'
+        }
+        success {
+            echo 'Build successful ✅'
         }
     }
 }
