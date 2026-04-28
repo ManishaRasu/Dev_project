@@ -65,12 +65,13 @@ pipeline {
     }
 
     stages {
+
         stage('Clean Workspace') {
             steps {
                 deleteDir()
             }
         }
-        
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -79,20 +80,20 @@ pipeline {
 
         stage('Environment Check') {
             steps {
-                bat 'docker --version'
-                bat 'docker compose version'
+                sh 'docker --version'
+                sh 'docker compose version'
             }
         }
 
         stage('Stop Old Containers') {
             steps {
-                bat 'docker compose down --remove-orphans'
+                sh 'docker compose down --remove-orphans'
             }
         }
 
         stage('Build & Start Services') {
             steps {
-                bat 'docker compose up --build -d'
+                sh 'docker compose up --build -d'
             }
         }
 
@@ -104,15 +105,15 @@ pipeline {
 
         stage('Health Check') {
             steps {
-                bat 'docker compose ps'
-                bat 'curl -f http://localhost:5000/health || exit 1'
-                bat 'curl -f http://localhost:3000 || exit 1'
+                sh 'docker compose ps'
+                sh 'curl -f http://localhost:5000/health || exit 1'
+                sh 'curl -f http://localhost:3000 || exit 1'
             }
         }
 
         stage('Show Logs') {
             steps {
-                bat 'docker compose logs --tail=20'
+                sh 'docker compose logs --tail=20'
             }
         }
     }
